@@ -8,7 +8,7 @@ deploy:
     skip_cleanup: true
     on: &2
       repo: mbdebbeler/java-http-server
-    bucket: mbdebbeler-apprenticeship
+    bucket: mbdebbeler-apprenticeship-2
     region: us-east-2
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
