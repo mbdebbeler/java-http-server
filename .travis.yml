@@ -13,7 +13,7 @@ deploy:
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: mbdebbeler-apprenticeship
+    bucket: mbdebbeler-apprenticeship-2
     key: latest.zip
     bundle_type: zip
     application: java-http-server

@@ -2,4 +2,4 @@ version: 0.0
 os: linux
 files:
   - source: ./
-    destination: /home/ect2-user/java-http-server
+    destination: /dpl_cd_upload/latest.zip
