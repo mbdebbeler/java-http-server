@@ -14,7 +14,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: mbdebbeler-apprenticeship-2
-    key: java-http-server.zip
+    key: zipped_jar.zip
     bundle_type: zip
     application: java-http-server
     deployment_group: apprenticeship
@@ -25,3 +25,8 @@ deploy:
 
 script:
   - ./gradlew build && ./gradlew test
+  - cd out/artifacts
+  - zip -r zipped_jar *
+  - cd ../..
+  - mkdir -p zip_container
+  - mv out/artifacts/zipped_jar.zip zip_container
