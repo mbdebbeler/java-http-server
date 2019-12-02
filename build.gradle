@@ -2,6 +2,14 @@ plugins {
     id 'java'
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'mbdebbeler.HelloWorld'
+        )
+    }
+}
+
 group 'mbdebbeler'
 version '1.0-SNAPSHOT'
 
