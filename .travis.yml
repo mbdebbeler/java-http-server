@@ -4,7 +4,7 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    local_dir: out
+    local_dir: zipped_project
     skip_cleanup: true
     bucket: mbdebbeler-apprenticeship-2
     region: us-east-2
@@ -14,7 +14,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: mbdebbeler-apprenticeship-2
-    key: artifacts/java_http_server_jar/java-http-server.jar
+    key: latest.zip
     bundle_type: zip
     application: java-http-server
     deployment_group: apprenticeship
@@ -25,3 +25,6 @@ deploy:
 
 script:
   - ./gradlew build && ./gradlew test
+  - zip -r latest *
+  - mkdir -p zipped_project
+  - mv latest.zip zipped_project/latest.zip
