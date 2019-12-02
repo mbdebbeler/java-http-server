@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: java-http-server.jar
-    destination: /opt
+    destination: /home
   - source: deploy_server.sh
     destination: /opt
 hooks:
