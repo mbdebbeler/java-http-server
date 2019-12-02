@@ -1,5 +1,10 @@
 version: 0.0
 os: linux
 files:
-  - source: ./
-    destination: /dpl_cd_upload/latest.zip
+  - source: java-http-server.jar
+    destination: /opt
+  - source: deploy_server.sh
+    destination: /opt
+hooks:
+  ApplicationStart:
+    - location: deploy_server.sh
