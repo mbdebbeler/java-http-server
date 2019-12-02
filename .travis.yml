@@ -6,8 +6,6 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     local_dir: dpl_cd_upload
     skip_cleanup: true
-    on: &2
-      repo: mbdebbeler/java-http-server
     bucket: mbdebbeler-apprenticeship-2
     region: us-east-2
     on:
@@ -24,7 +22,6 @@ deploy:
     on:
       all_branches: true
     region: us-east-2
-    on: *2
 
 script:
   - ./gradlew build && ./gradlew test
