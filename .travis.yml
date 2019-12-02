@@ -14,7 +14,8 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: mbdebbeler-apprenticeship-2
-    key: java-http-server.jar
+    key: java-http-server.zip
+    bundle_type: zip
     application: java-http-server
     deployment_group: apprenticeship
     wait_until_deployed: true
