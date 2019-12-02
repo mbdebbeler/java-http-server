@@ -25,8 +25,3 @@ deploy:
 
 script:
   - ./gradlew build && ./gradlew test
-  - cd out/artifacts
-  - zip -r zipped_jar *
-  - cd ../..
-  - mkdir -p zip_container
-  - mv out/artifacts/zipped_jar.zip zip_container
