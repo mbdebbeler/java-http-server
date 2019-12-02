@@ -4,6 +4,7 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
+    local_dir: out
     skip_cleanup: true
     bucket: mbdebbeler-apprenticeship-2
     region: us-east-2
@@ -13,6 +14,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: mbdebbeler-apprenticeship-2
+    key: java-http-server.jar
     application: java-http-server
     deployment_group: apprenticeship
     wait_until_deployed: true
