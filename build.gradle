@@ -5,7 +5,7 @@ plugins {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'HelloWorld'
+                'Main-Class': 'mbdebbeler.HelloWorld'
         )
     }
 }
