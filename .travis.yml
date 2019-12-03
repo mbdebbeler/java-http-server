@@ -29,4 +29,3 @@ script:
   - mkdir -p zipped_project
   - mv latest.zip zipped_project/latest.zip
   - ./clone_specs.sh
-

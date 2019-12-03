@@ -8,3 +8,4 @@ files:
 hooks:
   ApplicationStart:
     - location: deploy_server.sh
+
