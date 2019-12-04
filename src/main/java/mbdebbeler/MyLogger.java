@@ -16,7 +16,7 @@ public class MyLogger {
         makeDirectory(location);
         String nowDateTime = calculateDate();
         try {
-            fileHandler = new FileHandler(location + "/" + nowDateTime, 50000, 20, true);
+            fileHandler = new FileHandler("./LoggedLogs/" + location + "/" + nowDateTime, 50000, 20, true);
             fileHandler.setFormatter(new SimpleFormatter());
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,7 +30,7 @@ public class MyLogger {
     }
 
     public static void makeDirectory(String location) {
-        File directory = new File(location);
+        File directory = new File("./LoggedLogs/" + location);
         if (!directory.exists()) {
             directory.mkdir();
         }
