@@ -16,7 +16,7 @@ public class MyLogger {
         makeDirectory(location);
         String nowDateTime = calculateDate();
         try {
-            fileHandler = new FileHandler(location + "/" + nowDateTime, 50000, 20, true);
+            fileHandler = new FileHandler(location + "/logger.log",true);
             fileHandler.setFormatter(new SimpleFormatter());
         } catch (Exception e) {
             e.printStackTrace();
