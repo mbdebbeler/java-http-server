@@ -5,7 +5,7 @@ files:
     destination: /opt
   - source: deploy_server.sh
     destination: /opt
-  - source: Logs/logger.log
+  - source: Logs
     destination: /opt
 hooks:
   ApplicationStart:
