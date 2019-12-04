@@ -4,3 +4,27 @@ Dec 04, 2019 12:22:52 PM mbdebbeler.MyLogger log
 INFO: message 2
 Dec 04, 2019 12:22:52 PM mbdebbeler.MyLogger log
 INFO: message 3
+Dec 04, 2019 1:47:24 PM mbdebbeler.MyLogger logSomething
+WARNING: message 1
+Dec 04, 2019 1:47:24 PM mbdebbeler.MyLogger logSomething
+WARNING: message 2
+Dec 04, 2019 1:47:24 PM mbdebbeler.MyLogger logSomething
+WARNING: message 3
+Dec 04, 2019 1:48:01 PM mbdebbeler.MyLogger logSomething
+WARNING: message 1
+Dec 04, 2019 1:48:01 PM mbdebbeler.MyLogger logSomething
+WARNING: message 2
+Dec 04, 2019 1:48:01 PM mbdebbeler.MyLogger logSomething
+WARNING: message 3
+Dec 04, 2019 1:54:04 PM mbdebbeler.MyLogger logSomething
+WARNING: message 1
+Dec 04, 2019 1:54:04 PM mbdebbeler.MyLogger logSomething
+WARNING: message 2
+Dec 04, 2019 1:54:04 PM mbdebbeler.MyLogger logSomething
+WARNING: message 3
+Dec 04, 2019 2:12:49 PM mbdebbeler.MyLogger logSomething
+INFO: Everything is fine.
+Dec 04, 2019 2:12:49 PM mbdebbeler.MyLogger logSomething
+WARNING: Things are not fine.
+Dec 04, 2019 2:12:49 PM mbdebbeler.MyLogger logSomething
+SEVERE: ALL IS LOST.

@@ -1,6 +1,5 @@
 package mbdebbeler;
-
-import mbdebbeler.MyLogger;
+import java.util.logging.Level;
 
 public class HelloWorld {
     private static MyLogger mylogger;
@@ -16,9 +15,9 @@ public class HelloWorld {
         mylogger = new MyLogger();
         mylogger.init("Logs");
 
-        mylogger.log("message 1");
-        mylogger.log("message 2");
-        mylogger.log("message 3");
+        mylogger.logSomething(Level.INFO, "Everything is fine.");
+        mylogger.logSomething(Level.WARNING, "Things are not fine.");
+        mylogger.logSomething(Level.SEVERE, "ALL IS LOST.");
     }
 
 }

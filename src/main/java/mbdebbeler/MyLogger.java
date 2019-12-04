@@ -3,8 +3,9 @@ package mbdebbeler;
 import java.io.File;
 import java.util.logging.*;
 
-public class MyLogger {
 
+
+public class MyLogger {
     private final static Logger logger = Logger.getLogger(MyLogger.class.getName());
     private static FileHandler fileHandler;
 
@@ -16,11 +17,12 @@ public class MyLogger {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        logger.setUseParentHandlers(false);
         logger.addHandler(fileHandler);
     }
 
-    public void log(String message) {
-        logger.info(message);
+    public void logSomething(Level level, String message) {
+        logger.log(level, message);
     }
 
     public static void makeDirectory(String location) {
