@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: out/artifacts/server-jar/server.jar
+  - source: out/artifacts/java_http_server_jar/java-http-server.jar
     destination: /opt
   - source: deploy_server.sh
     destination: /opt
