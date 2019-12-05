@@ -6,9 +6,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import static java.util.logging.Level.FINE;
+
 public class SocketWrapper implements ISocket {
     private BufferedReader input;
     private PrintWriter output;
+    private ServerLogger serverLogger = new ServerLogger();
 
     public SocketWrapper(Socket socket) throws IOException {
         Socket clientSocket = socket;
@@ -22,9 +25,8 @@ public class SocketWrapper implements ISocket {
         } catch (IOException e) {
             String inputError = "[-] Input not received.";
             System.err.println(inputError);
-            e.printStackTrace();
+            serverLogger.logSomething(FINE, e.getMessage());
         }
-        ;
         return null;
     }
 
@@ -39,7 +41,7 @@ public class SocketWrapper implements ISocket {
         } catch (IOException e) {
             String shutdownError = "[-] Shutdown error.";
             System.err.println(shutdownError);
-            e.printStackTrace();
+            serverLogger.logSomething(FINE, e.getMessage());
         }
     }
 }
