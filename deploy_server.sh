@@ -1,0 +1,1 @@
+eval "java -jar just-hello-world.jar &"
