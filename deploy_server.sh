@@ -1,1 +1,1 @@
-eval "java -jar just-hello-world.jar &"
+eval "java -jar server.jar &"

@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: out/artifacts/just_hello_world_jar/just-hello-world.jar
+  - source: out/artifacts/server-jar/server.jar
     destination: /opt
   - source: deploy_server.sh
     destination: /opt
