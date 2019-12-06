@@ -1,7 +1,5 @@
 package server;
 
-import jdk.net.SocketFlow;
-
 public class RequestHandler {
     private Request request;
 
