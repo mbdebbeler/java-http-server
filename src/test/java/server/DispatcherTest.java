@@ -50,7 +50,7 @@ public class DispatcherTest {
     public void aServerSocketSendsData() {
         String message = mockSocketWrapper.receive();
         mockSocketWrapper.send(message);
-        Assert.assertEquals(mockSocketWrapper.getSentData(), "TEST MESSAGE");
+        Assert.assertEquals(mockSocketWrapper.getSentData(), "test message");
     }
 
     @Test

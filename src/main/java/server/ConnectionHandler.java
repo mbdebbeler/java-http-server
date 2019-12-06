@@ -4,16 +4,16 @@ import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.FINE;
 
 public class ConnectionHandler implements Runnable {
-    public ISocket socketWrapper;
+    public ISocket socket;
     private ServerLogger serverLogger = new ServerLogger();
 
-    public ConnectionHandler(ISocket socketWrapper) {
-        this.socketWrapper = socketWrapper;
+    public ConnectionHandler(ISocket socket) {
+        this.socket = socket;
     }
 
     public void run() {
         try {
-            String message = socketWrapper.receive();
+            String message = socket.receive();
             if (message != null) {
                 Request request = new Request(message);
                 RequestHandler handler = new RequestHandler(request);
@@ -21,14 +21,14 @@ public class ConnectionHandler implements Runnable {
                 String statusLine = response.getStatusLine();
                 System.out.println("RESPONSE: " + statusLine);
                 serverLogger.logSomething(INFO, statusLine);
-                socketWrapper.send(statusLine);
+                socket.send(statusLine);
             }
         } catch (Exception e) {
             serverLogger.logSomething(FINE, e.getMessage());
         } finally {
             System.out.println("[-] Closing Socket!");
             serverLogger.logSomething(INFO, "[-] Closing Socket!");
-            socketWrapper.close();
+            socket.close();
         }
     }
 }
