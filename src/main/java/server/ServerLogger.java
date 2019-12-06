@@ -1,8 +1,7 @@
 package server;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,20 +13,27 @@ public class ServerLogger {
 
     public ServerLogger() {
         String location = "Logs";
-        String nowDateTime = calculateDate();
+        String fileName = "logger.log";
         makeDirectory(location);
+        makeFile(fileName);
+    }
+
+    public FileHandler makeFileHandler() {
         try {
-            fileHandler = new FileHandler(location + "/" + nowDateTime, 50000, 20, true);
+            fileHandler = new FileHandler("Logs/logger.log", true);
             fileHandler.setFormatter(new SimpleFormatter());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.setUseParentHandlers(false);
-        logger.addHandler(fileHandler);
+        return fileHandler;
     }
 
     public void logSomething(Level level, String message) {
+        logger.setUseParentHandlers(false);
+        FileHandler fileHandler = makeFileHandler();
+        logger.addHandler(fileHandler);
         logger.log(level, message);
+        fileHandler.close();
     }
 
     private static void makeDirectory(String location) {
@@ -37,10 +43,15 @@ public class ServerLogger {
         }
     }
 
-    private static String calculateDate() {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MMMMM.dd'at'kk:mm");
-        return dateFormat.format(date);
+    private static void makeFile(String fileName) {
+        File logFile = new File(fileName);
+        if (!logFile.exists()) {
+            try {
+                logFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

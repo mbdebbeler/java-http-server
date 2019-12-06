@@ -5,10 +5,11 @@ import static java.util.logging.Level.FINE;
 
 public class ConnectionHandler implements Runnable {
     public ISocket socket;
-    private ServerLogger serverLogger = new ServerLogger();
+    public ServerLogger serverLogger;
 
-    public ConnectionHandler(ISocket socket) {
+    public ConnectionHandler(ISocket socket, ServerLogger serverLogger) {
         this.socket = socket;
+        this.serverLogger = serverLogger;
     }
 
     public void run() {
@@ -20,7 +21,7 @@ public class ConnectionHandler implements Runnable {
                 Response response = handler.buildResponse();
                 String statusLine = response.getStatusLine();
                 System.out.println("RESPONSE: " + statusLine);
-                serverLogger.logSomething(INFO, statusLine);
+                serverLogger.logSomething(INFO, statusLine.trim());
                 socket.send(statusLine);
             }
         } catch (Exception e) {
