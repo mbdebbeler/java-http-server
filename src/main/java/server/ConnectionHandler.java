@@ -3,11 +3,11 @@ package server;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.FINE;
 
-public class EchoClientHandler implements Runnable {
+public class ConnectionHandler implements Runnable {
     public ISocket socketWrapper;
     private ServerLogger serverLogger = new ServerLogger();
 
-    public EchoClientHandler(ISocket socketWrapper) {
+    public ConnectionHandler(ISocket socketWrapper) {
         this.socketWrapper = socketWrapper;
     }
 

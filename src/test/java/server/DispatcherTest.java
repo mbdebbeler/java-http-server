@@ -6,9 +6,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class EchoServerTest {
+public class DispatcherTest {
     private String[] commandLineArgs = {"6666"};
-    private MockEchoServer mockEchoServer;
+    private MockDispatcher mockDispatcher;
     private int portNumber;
     private MockServerSocketWrapper mockServerSocketWrapper;
     private MockSocketWrapper mockSocketWrapper;
@@ -17,13 +17,13 @@ public class EchoServerTest {
     public void setUp() {
         portNumber = Integer.parseInt(commandLineArgs[0]);
         mockServerSocketWrapper = new MockServerSocketWrapper(portNumber);
-        mockEchoServer = new MockEchoServer(mockServerSocketWrapper);
+        mockDispatcher = new MockDispatcher(mockServerSocketWrapper);
         mockSocketWrapper = new MockSocketWrapper();
     }
 
     @Test
     public void startServerCallsCreateAndListen() throws IOException {
-        mockEchoServer.serve(commandLineArgs, mockServerSocketWrapper);
+        mockDispatcher.listenAndDispatch(commandLineArgs, mockServerSocketWrapper);
         Assert.assertTrue(mockServerSocketWrapper.getIsListening());
     }
 
