@@ -13,19 +13,17 @@ public class ConnectionHandler implements Runnable {
 
     public void run() {
         try {
-            String clientMessage;
-            while ((clientMessage = socketWrapper.receive()) != null) {
-                if (clientMessage.toLowerCase().trim().equals("exit")) {
-                    break;
-                } else {
-                    String printMe = String.format("[-] Client says: %s", clientMessage);
-                    System.out.println(printMe);
-                    serverLogger.logSomething(INFO, printMe);
-                    socketWrapper.send(clientMessage);
-                }
+            String message = socketWrapper.receive();
+            if (message != null) {
+                Request request = new Request(message);
+                RequestHandler handler = new RequestHandler(request);
+                Response response = handler.buildResponse();
+                String statusLine = response.getStatusLine();
+                System.out.println("RESPONSE: " + statusLine);
+                serverLogger.logSomething(INFO, statusLine);
+                socketWrapper.send(statusLine);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             serverLogger.logSomething(FINE, e.getMessage());
         } finally {
             System.out.println("[-] Closing Socket!");
