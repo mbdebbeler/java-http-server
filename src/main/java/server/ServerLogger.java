@@ -32,7 +32,12 @@ public class ServerLogger {
         logger.setUseParentHandlers(false);
         FileHandler fileHandler = makeFileHandler();
         logger.addHandler(fileHandler);
-        logger.log(level, message);
+        try {
+            logger.log(level, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ;
         fileHandler.close();
     }
 
