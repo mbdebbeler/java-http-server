@@ -178,3 +178,27 @@ Dec 10, 2019 1:49:15 PM server.ServerLogger logSomething
 INFO: HTTP/1.1 200 OK
 Dec 10, 2019 1:49:15 PM server.ServerLogger logSomething
 INFO: [-] Closing Socket!
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!

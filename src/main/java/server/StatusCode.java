@@ -1,7 +1,7 @@
 package server;
 
 public enum StatusCode {
-    OK(200), BAD_REQUEST(400);
+    OK(200), BAD_REQUEST(400), NOT_FOUND(404);
 
     private final int value;
 
@@ -15,6 +15,8 @@ public enum StatusCode {
                 return "OK";
             case BAD_REQUEST:
                 return "Bad Request";
+            case NOT_FOUND:
+                return "Not Found";
             default:
                 return "Unknown";
         }
