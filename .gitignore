@@ -1,6 +1,9 @@
 .gradle
 /build/
 
+# Ignore logger so local logs don't get mixed up with deployed logs
+Logs/logger.log
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
