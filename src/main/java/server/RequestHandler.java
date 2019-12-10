@@ -12,6 +12,8 @@ public class RequestHandler {
         switch (requestMethod) {
             case GET:
                 return new Response(StatusCode.OK);
+            case HEAD:
+                return new Response(StatusCode.OK);
             default:
                 return new Response(StatusCode.BAD_REQUEST);
         }
