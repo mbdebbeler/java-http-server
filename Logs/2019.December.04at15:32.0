@@ -1,6 +1,0 @@
-Dec 04, 2019 3:32:22 PM mbdebbeler.MyLogger logSomething
-INFO: Everything is fine.
-Dec 04, 2019 3:32:22 PM mbdebbeler.MyLogger logSomething
-WARNING: Things are not fine.
-Dec 04, 2019 3:32:22 PM mbdebbeler.MyLogger logSomething
-SEVERE: ALL IS LOST.

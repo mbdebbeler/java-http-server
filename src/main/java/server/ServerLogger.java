@@ -1,4 +1,4 @@
-package mbdebbeler;
+package server;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -8,13 +8,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class MyLogger {
-    private final static Logger logger = Logger.getLogger(MyLogger.class.getName());
+public class ServerLogger {
+    private final static Logger logger = Logger.getLogger(ServerLogger.class.getName());
     private static FileHandler fileHandler;
 
-    public static void init(String location) {
-        makeDirectory(location);
+    public ServerLogger() {
+        String location = "Logs";
         String nowDateTime = calculateDate();
+        makeDirectory(location);
         try {
             fileHandler = new FileHandler(location + "/" + nowDateTime, 50000, 20, true);
             fileHandler.setFormatter(new SimpleFormatter());
@@ -29,7 +30,7 @@ public class MyLogger {
         logger.log(level, message);
     }
 
-    public static void makeDirectory(String location) {
+    private static void makeDirectory(String location) {
         File directory = new File(location);
         if (!directory.exists()) {
             directory.mkdir();
