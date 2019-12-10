@@ -156,3 +156,5 @@ INFO: HTTP/1.1 200 OK
 
 Dec 06, 2019 4:34:08 PM server.ServerLogger logSomething
 INFO: [-] Closing Socket!
+Dec 10, 2019 9:03:46 AM server.ServerLogger logSomething
+INFO: [-] Listening for connection on port 5000
