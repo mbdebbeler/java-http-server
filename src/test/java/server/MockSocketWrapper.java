@@ -2,15 +2,23 @@ package server;
 
 public class MockSocketWrapper implements ISocket {
     public static String sentData;
+    private String testMessage;
     public static boolean closeWasCalled = false;
 
+    public MockSocketWrapper(){
+        this.testMessage = "test message";
+    };
+
+    public MockSocketWrapper(String testMessage) {
+        this.testMessage = testMessage;
+    }
+
     public String receive() {
-        String test = "test message";
-        return test;
+        return testMessage;
     }
 
     public void send(String data) {
-        sentData = data.toUpperCase();
+        sentData = data;
     }
 
     public String getSentData() {
