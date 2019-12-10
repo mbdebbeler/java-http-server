@@ -202,3 +202,109 @@ Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
 INFO: HTTP/1.1 200 OK
 Dec 10, 2019 1:57:20 PM server.ServerLogger logSomething
 INFO: [-] Closing Socket!
+Dec 10, 2019 4:21:14 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 4:21:14 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:24:13 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 4:24:13 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:46:50 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:46:50 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:46:50 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:46:50 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:47:58 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:47:58 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:47:58 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 4:47:58 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:52:28 PM server.ServerLogger logSomething
+INFO: [-] Listening for connection on port 5000
+Dec 10, 2019 4:55:12 PM server.ServerLogger logSomething
+INFO: [-] Listening for connection on port 5000
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 4:55:15 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 5:05:18 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 5:05:18 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 5:05:18 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 5:05:18 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 5:50:21 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 5:50:21 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 5:50:21 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 5:50:21 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:18:20 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 6:18:20 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:19:32 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 6:19:32 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:19:32 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 6:19:32 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:20:17 PM server.ServerLogger logSomething
+INFO: [-] Listening for connection on port 5000
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 404 Not Found
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Accepted connection
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: HTTP/1.1 200 OK
+Dec 10, 2019 6:20:24 PM server.ServerLogger logSomething
+INFO: [-] Closing Socket!

@@ -11,7 +11,6 @@ public class RequestHandler {
         Method requestMethod = request.getMethod();
         switch (requestMethod) {
             case GET:
-                return new Response(StatusCode.OK);
             case HEAD:
                 return new Response(StatusCode.OK);
             default:

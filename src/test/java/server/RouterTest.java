@@ -14,4 +14,14 @@ public class RouterTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void doesNotReturnNotFoundWhenRouteDoesExist() {
+        Request testRequest = new Request("GET /simple_get");
+        Router testRouter = new Router();
+        StatusCode actual = testRouter.route(testRequest).getStatusCode();
+        StatusCode expected = StatusCode.OK;
+
+        Assert.assertEquals(expected, actual);
+    }
+
 }

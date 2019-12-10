@@ -16,4 +16,8 @@ public class Request {
         }
     }
 
+    public String getPath() {
+        return message.split(" ")[1];
+    }
+
 }
