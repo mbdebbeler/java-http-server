@@ -24,8 +24,4 @@ deploy:
     region: us-east-2
 
 script:
-  - ./gradlew build && ./gradlew test
-  - zip -r latest *
-  - mkdir -p zipped_project
-  - mv latest.zip zipped_project/latest.zip
-  - ./clone_specs.sh
+  - ./scripts/build_and_run_unit_tests.sh
