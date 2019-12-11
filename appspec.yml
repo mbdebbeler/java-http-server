@@ -9,5 +9,5 @@ files:
     destination: /opt
 hooks:
   ApplicationStart:
-    - location: /opt/start_server.sh
+    - location: start_server.sh
 
