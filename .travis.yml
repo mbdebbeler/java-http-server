@@ -23,5 +23,8 @@ deploy:
       all_branches: true
     region: us-east-2
 
+before_install:
+  - chmod +x ./scripts/*
+
 script:
   - ./scripts/build_and_run_unit_tests.sh
