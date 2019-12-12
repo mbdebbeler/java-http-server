@@ -42,6 +42,7 @@ public class RouterTest {
     public void returnsOKAndAllowedMethodsForAnOptionsRequestWhenPathExists() {
         Request testRequest = new Request("OPTIONS /test_route");
         Router testRouter = new Router(routes);
+
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
@@ -66,6 +67,5 @@ public class RouterTest {
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
     }
-
 
 }

@@ -1,32 +1,38 @@
 package server;
 
-import org.junit.Assert;
 import org.junit.Test;
+import org.junit.Assert;
 
 public class ResponseBuilderTest {
 
     @Test
-    public void responseBuilderReturnsADefaultResponse() {
-        Response testResponse = new ResponseBuilder().build();
-        StatusCode expectedStatusCode = StatusCode.OK;
-        String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
-        StatusCode actualStatusCode = testResponse.getStatusCode();
-        String actualStatusLine = testResponse.getStatusLine();
+    public void returnsOKIfRequestIsAGet() {
+        Request testRequest = new Request("GET something");
+        ResponseBuilder responseBuilder = new ResponseBuilder(testRequest);
+        StatusCode actual = responseBuilder.buildResponse().getStatusCode();
+        StatusCode expected = StatusCode.OK;
 
-        Assert.assertEquals(expectedStatusLine, actualStatusLine);
-        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void CanAddAStatusCode() {
-        Response testResponse = new ResponseBuilder().AddStatusCode(StatusCode.NOT_FOUND).build();
-        StatusCode expectedStatusCode = StatusCode.NOT_FOUND;
-        String expectedStatusLine = "HTTP/1.1 404 Not Found\r\n";
-        StatusCode actualStatusCode = testResponse.getStatusCode();
-        String actualStatusLine = testResponse.getStatusLine();
+    public void returnsOKIfRequestIsAHead() {
+        Request testRequest = new Request("HEAD something");
+        ResponseBuilder responseBuilder = new ResponseBuilder(testRequest);
+        StatusCode actual = responseBuilder.buildResponse().getStatusCode();
+        StatusCode expected = StatusCode.OK;
 
-        Assert.assertEquals(expectedStatusLine, actualStatusLine);
-        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void returnsBAD_REQUESTIfMethodDoesNotExist() {
+        Request testRequest = new Request("BOO something");
+        ResponseBuilder responseBuilder = new ResponseBuilder(testRequest);
+        StatusCode actual = responseBuilder.buildResponse().getStatusCode();
+        StatusCode expected = StatusCode.BAD_REQUEST;
+
+        Assert.assertEquals(expected, actual);
     }
 
 }
