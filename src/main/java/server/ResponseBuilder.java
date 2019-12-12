@@ -1,9 +1,9 @@
 package server;
 
-public class RequestHandler {
+public class ResponseBuilder {
     private Request request;
 
-    public RequestHandler(Request request) {
+    public ResponseBuilder(Request request) {
         this.request = request;
     }
 
@@ -13,6 +13,8 @@ public class RequestHandler {
             case GET:
             case HEAD:
                 return new Response(StatusCode.OK);
+            case OPTIONS:
+                return new Response(StatusCode.OK, "Allow: OPTIONS, GET, HEAD");
             default:
                 return new Response(StatusCode.BAD_REQUEST);
         }
