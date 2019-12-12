@@ -19,7 +19,7 @@ public class ConnectionHandler implements Runnable {
                 Request request = new Request(message);
                 Router router = new Router();
                 Response response = router.route(request);
-                String statusLine = response.getStatusLine();
+                String statusLine = response.getAllPartsOfResponseAsString();
                 System.out.println("RESPONSE: " + statusLine);
                 serverLogger.logSomething(INFO, statusLine.trim());
                 socket.send(statusLine);

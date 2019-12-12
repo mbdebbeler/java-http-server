@@ -33,4 +33,18 @@ public class ConnectionHandlerTest {
         Assert.assertEquals(expectedIsClosed, actualIsClosed);
     }
 
+    @Test
+    public void itSendsAllowedMethodsWhenItGetsAnOptionsRequest() {
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("OPTIONS /simple_get");
+        ServerLogger mockServerLogger = new ServerLogger();
+        ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockServerLogger);
+        connectionHandler.run();
+        String expectedSentMessage = "HTTP/1.1 200 OK\nAllow: OPTIONS, GET, HEAD\r\n";
+        String actualSentMessage = mockSocketWrapper.getSentData();
+        Boolean expectedIsClosed = true;
+        Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
+        Assert.assertEquals(expectedSentMessage, actualSentMessage);
+        Assert.assertEquals(expectedIsClosed, actualIsClosed);
+    }
+
 }
