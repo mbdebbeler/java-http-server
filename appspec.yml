@@ -8,6 +8,6 @@ files:
   - source: /Logs
     destination: /opt
 hooks:
-  ApplicationStart:
-    - location: start_server.sh
+  AfterInstall:
+    - location: scripts/start_server.sh
 
