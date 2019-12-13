@@ -18,7 +18,7 @@ public class ConnectionHandler implements Runnable {
         ArrayList<Route> routes = new ArrayList<Route>();
         Route route = new Route(Method.GET, "/simple_get");
         routes.add(route);
-        return null;
+        return routes;
     }
 
     public void run() {
