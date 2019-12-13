@@ -1,5 +1,5 @@
 package server;
 
 public enum Method {
-    GET, HEAD, INVALID, OPTIONS
+    GET, HEAD, INVALID, OPTIONS, PUT, POST
 }

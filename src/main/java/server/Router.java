@@ -13,14 +13,14 @@ public class Router {
         String requestPath = request.getPath();
         Method requestMethod = request.getMethod();
 
-        for (Route route:
-             this.routes) {
+        for (Route route :
+                this.routes) {
             if (requestMethod.equals(Method.OPTIONS) && route.getPath().equals(requestPath)) {
                 return buildOptionsResponse(request);
+            } else if (requestMethod.equals(Method.HEAD) && route.getPath().equals(requestPath)) {
+                return buildHeadResponse(request);
             } else if (route.getMethod().equals(requestMethod) && route.getPath().equals(requestPath)) {
-                ResponseBuilder builder = new ResponseBuilder(request);
-                Response response = builder.buildResponse();
-                return response;
+                return route.getRequestHandler().handle(request);
             }
         }
 
@@ -33,16 +33,21 @@ public class Router {
         ArrayList<String> allowedMethods = new ArrayList<String>();
         for (Route route : this.routes) {
             if (route.getPath().equals(request.getPath())) {
-                allowedMethods.add(route.method.name());
+                allowedMethods.add(route.getMethod().name());
             }
         }
         if (allowedMethods.isEmpty()) {
             return new Response(StatusCode.NOT_FOUND);
         }
+        allowedMethods.add(Method.HEAD.name());
+        allowedMethods.add(Method.OPTIONS.name());
         String listString = String.join(", ", allowedMethods);
         String allowedResponseLine = "Allow: " + listString;
         response = new Response(StatusCode.OK, allowedResponseLine);
-        System.out.println(response.getStatusLine());
         return response;
+    }
+
+    private Response buildHeadResponse(Request request) {
+        return new Response(StatusCode.OK);
     }
 }

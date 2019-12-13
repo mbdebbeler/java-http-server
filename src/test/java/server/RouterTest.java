@@ -12,12 +12,10 @@ public class RouterTest {
     @Before
     public void initializeTestRoutes() {
         routes = new ArrayList<Route>();
-        Route route1 = new Route(Method.GET, "/test_route");
-        Route route2 = new Route(Method.HEAD, "/test_route");
-        Route route3 = new Route(Method.OPTIONS, "/test_route");
+        Route route1 = new Route(Method.GET, "/test_route", (request) -> {
+            return new Response(StatusCode.OK);
+        });
         routes.add(route1);
-        routes.add(route2);
-        routes.add(route3);
     }
 
     @Test
@@ -49,7 +47,7 @@ public class RouterTest {
         String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
         StatusCode expectedStatusCode = StatusCode.OK;
         String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
-        String expectedResponseAsString= "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
+        String expectedResponseAsString = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
