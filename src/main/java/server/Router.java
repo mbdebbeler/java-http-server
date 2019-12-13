@@ -1,11 +1,12 @@
 package server;
 
+import java.util.ArrayList;
+
 public class Router {
 
     Route route;
 
-    public Router() {
-        route = new Route(Method.GET, "/simple_get");
+    public Router(ArrayList<Route> routes) {
     }
 
     public Response route(Request request) {
