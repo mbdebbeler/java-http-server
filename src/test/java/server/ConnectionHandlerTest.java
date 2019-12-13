@@ -39,11 +39,8 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockServerLogger);
         connectionHandler.run();
-<<<<<<< HEAD
         String expectedSentMessage = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
-=======
-        String expectedSentMessage = "HTTP/1.1 200 OK\nAllow: OPTIONS, GET, HEAD\r\n";
->>>>>>> 99b7977... Implement naive OPTIONS method with hardcoding
+
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();

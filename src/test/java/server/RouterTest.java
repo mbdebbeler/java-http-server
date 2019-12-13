@@ -16,6 +16,7 @@ public class RouterTest {
             return new Response(StatusCode.OK);
         });
         routes.add(route1);
+
     }
 
     @Test
@@ -42,13 +43,13 @@ public class RouterTest {
     public void returnsOKAndAllowedMethodsForAnOptionsRequestWhenPathExists() {
         Request testRequest = new Request("OPTIONS /test_route");
         Router testRouter = new Router(routes);
-
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
         StatusCode expectedStatusCode = StatusCode.OK;
         String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
         String expectedResponseAsString = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
+
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);

@@ -1,13 +1,9 @@
 package server;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 
 public class Router {
->>>>>>> afb125f... Inject ArrayList of Routes into the Router
 
-public class Router {
     ArrayList<Route> routes;
 
     public Router(ArrayList<Route> routes) {
@@ -54,5 +50,6 @@ public class Router {
 
     private Response buildHeadResponse(Request request) {
         return new Response(StatusCode.OK);
+
     }
 }
