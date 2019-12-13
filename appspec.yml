@@ -9,5 +9,5 @@ files:
     destination: /opt
 hooks:
   AfterInstall:
-    - location: scripts/start_server.sh
+    - location: ../../../../../start_server.sh
 

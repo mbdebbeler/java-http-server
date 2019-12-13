@@ -29,3 +29,6 @@ before_install:
 script:
   - ./scripts/build_and_run_unit_tests.sh
   - ./scripts/zip_project.sh
+
+after_deploy:
+  - ./scripts/clone_and_run_acceptance_tests.sh
