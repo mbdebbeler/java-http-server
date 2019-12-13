@@ -59,6 +59,7 @@ public class RouterTest {
     public void returnsNotFoundForAnOptionsRequestWhenPathDoesNotExist() {
         Request testRequest = new Request("OPTIONS /not_found_resources");
         Router testRouter = new Router(routes);
+
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         StatusCode expectedStatusCode = StatusCode.NOT_FOUND;
