@@ -16,7 +16,10 @@ public class RouterTest {
             return new Response(StatusCode.OK);
         });
         routes.add(route1);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7b3769f... Move request handling logic inside route, add routes
     }
 
     @Test
@@ -49,7 +52,10 @@ public class RouterTest {
         StatusCode expectedStatusCode = StatusCode.OK;
         String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
         String expectedResponseAsString = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7b3769f... Move request handling logic inside route, add routes
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);

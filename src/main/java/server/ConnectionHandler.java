@@ -35,7 +35,6 @@ public class ConnectionHandler implements Runnable {
                 return new Response(StatusCode.OK);
             }));
         }};
-
     }
 
     public void run() {
@@ -48,7 +47,6 @@ public class ConnectionHandler implements Runnable {
                 String responseAsString = response.getAllPartsOfResponseAsString();
                 serverLogger.logSomething(INFO, responseAsString.trim());
                 socket.send(responseAsString);
-
             }
         } catch (Exception e) {
             serverLogger.logSomething(FINE, e.getMessage());

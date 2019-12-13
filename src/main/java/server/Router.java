@@ -50,6 +50,5 @@ public class Router {
 
     private Response buildHeadResponse(Request request) {
         return new Response(StatusCode.OK);
-
     }
 }
