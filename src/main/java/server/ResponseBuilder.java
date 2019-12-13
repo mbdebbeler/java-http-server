@@ -13,8 +13,6 @@ public class ResponseBuilder {
             case GET:
             case HEAD:
                 return new Response(StatusCode.OK);
-            case OPTIONS:
-                return new Response(StatusCode.OK, "Allow: OPTIONS, GET, HEAD");
             default:
                 return new Response(StatusCode.BAD_REQUEST);
         }
