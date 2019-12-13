@@ -2,12 +2,18 @@ package server;
 
 public class Route {
 
-    Method method;
-    String path;
+    interface RequestHandler {
+        Response handle(Request request);
+    }
 
-    public Route(Method method, String path) {
+    private Method method;
+    private String path;
+    private RequestHandler requestHandler;
+
+    public Route(Method method, String path, RequestHandler requestHandler) {
         this.method = method;
         this.path = path;
+        this.requestHandler = requestHandler;
     }
 
     public Method getMethod() {
@@ -18,5 +24,8 @@ public class Route {
         return path;
     }
 
+    public RequestHandler getRequestHandler() {
+        return requestHandler;
+    }
 
 }

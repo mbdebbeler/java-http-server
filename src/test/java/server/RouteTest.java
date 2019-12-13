@@ -7,7 +7,9 @@ public class RouteTest {
 
     @Test
     public void getMethodReturnsAMethod() {
-        Route testRoute = new Route(Method.GET, "/simple_get");
+        Route testRoute = new Route(Method.GET, "/test_route", (request) -> {
+            return new Response(StatusCode.OK);
+        });
         Method expectedMethod = Method.GET;
         Method actualMethod = testRoute.getMethod();
         Assert.assertEquals(expectedMethod, actualMethod);
@@ -15,8 +17,10 @@ public class RouteTest {
 
     @Test
     public void getPathReturnsAString() {
-        Route testRoute = new Route(Method.GET, "/simple_get");
-        String expectedPath = "/simple_get";
+        Route testRoute = new Route(Method.GET, "/test_route", (request) -> {
+            return new Response(StatusCode.OK);
+        });
+        String expectedPath = "/test_route";
         String actualPath = testRoute.getPath();
         Assert.assertEquals(expectedPath, actualPath);
     }
