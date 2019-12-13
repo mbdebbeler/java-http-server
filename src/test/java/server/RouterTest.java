@@ -40,5 +40,18 @@ public class RouterTest {
         Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
     }
 
+    @Test
+    public void returnsNotFoundForAnOptionsRequestWhenPathDoesNotExist() {
+        Request testRequest = new Request("OPTIONS /not_found_resources");
+        Router testRouter = new Router();
+        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
+        String actualStatusLine = testRouter.route(testRequest).getStatusLine();
+        StatusCode expectedStatusCode = StatusCode.NOT_FOUND;
+        String expectedStatusLine = "HTTP/1.1 404 Not Found\r\n";
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+    }
+
 
 }
