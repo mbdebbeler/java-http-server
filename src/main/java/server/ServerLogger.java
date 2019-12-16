@@ -12,44 +12,41 @@ public class ServerLogger {
     private static FileHandler fileHandler;
 
     public ServerLogger() {
-//        String location = "Logs";
-//        String fileName = "logger.log";
-//        makeDirectory(location);
-//        makeFile(fileName);
+        String location = "Logs";
+        String fileName = "logger.log";
+        makeDirectory(location);
+        makeFile(fileName);
     }
 
     public FileHandler makeFileHandler() {
-//        System.out.println("I've entered makefilehandler");
-//        try {
-//            fileHandler = new FileHandler("Logs/logger.log", true);
-//            fileHandler.setFormatter(new SimpleFormatter());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("I'm past the try/catch in makefilehandler");
-//        return fileHandler;
-        return null;
+        try {
+            fileHandler = new FileHandler("Logs/logger.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileHandler;
     }
 
     public void logSomething(Level level, String message) {
-//        logger.setUseParentHandlers(false);
-//        try {
-//            fileHandler = makeFileHandler();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        ;
-//        if (fileHandler == null) {
-//            return;
-//        }
-//        logger.addHandler(fileHandler);
-//        try {
-//            logger.log(level, message);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        ;
-//        fileHandler.close();
+        logger.setUseParentHandlers(false);
+        try {
+            fileHandler = makeFileHandler();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ;
+        if (fileHandler == null) {
+            return;
+        }
+        logger.addHandler(fileHandler);
+        try {
+            logger.log(level, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ;
+        fileHandler.close();
     }
 
     private static void makeDirectory(String location) {
