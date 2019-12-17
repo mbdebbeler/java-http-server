@@ -1,7 +1,7 @@
 package server;
 
 public class Response {
-    private StatusCode statusCode;
+    public StatusCode statusCode;
     private String allowedMethods;
 
     public Response(StatusCode statusCode) {
