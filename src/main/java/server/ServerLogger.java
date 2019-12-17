@@ -30,7 +30,12 @@ public class ServerLogger {
 
     public void logSomething(Level level, String message) {
         logger.setUseParentHandlers(false);
-        FileHandler fileHandler = makeFileHandler();
+        try {
+            fileHandler = makeFileHandler();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ;
         if (fileHandler == null) {
             return;
         }
