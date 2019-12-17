@@ -16,7 +16,17 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void returnsBAD_REQUESTIfRequestIsNotAGet() {
+    public void returnsOKIfRequestIsAHead() {
+        Request testRequest = new Request("HEAD something");
+        RequestHandler requestHandler = new RequestHandler(testRequest);
+        StatusCode actual = requestHandler.buildResponse().getStatusCode();
+        StatusCode expected = StatusCode.OK;
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void returnsBAD_REQUESTIfMethodDoesNotExist() {
         Request testRequest = new Request("BOO something");
         RequestHandler requestHandler = new RequestHandler(testRequest);
         StatusCode actual = requestHandler.buildResponse().getStatusCode();
@@ -24,6 +34,5 @@ public class RequestHandlerTest {
 
         Assert.assertEquals(expected, actual);
     }
-
 
 }

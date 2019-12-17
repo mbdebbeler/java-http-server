@@ -20,4 +20,12 @@ public class RequestTest {
         Method expected = Method.INVALID;
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void getPathReturnsAPathWhenPathIsValid() {
+        Request testRequest = new Request("GET /simple_get");
+        String actual = testRequest.getPath();
+        String expected = "/simple_get";
+        Assert.assertEquals(expected, actual);
+    }
 }

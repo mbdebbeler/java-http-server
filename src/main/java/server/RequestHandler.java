@@ -1,7 +1,5 @@
 package server;
 
-import jdk.net.SocketFlow;
-
 public class RequestHandler {
     private Request request;
 
@@ -13,6 +11,7 @@ public class RequestHandler {
         Method requestMethod = request.getMethod();
         switch (requestMethod) {
             case GET:
+            case HEAD:
                 return new Response(StatusCode.OK);
             default:
                 return new Response(StatusCode.BAD_REQUEST);

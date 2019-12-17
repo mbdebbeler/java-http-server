@@ -9,7 +9,11 @@ import static java.util.logging.Level.INFO;
 
 public class ServerSocketWrapper implements IServerSocket {
     private ServerSocket serverSocket;
-    private ServerLogger serverLogger = new ServerLogger();
+    public ServerLogger serverLogger;
+
+    public ServerSocketWrapper(ServerLogger serverLogger) {
+        this.serverLogger = serverLogger;
+    }
 
     public void createAndListen(int portNumber) {
         try {
