@@ -25,30 +25,51 @@ public class Router {
             }
         }
 
+        for (Route route :
+                this.routes) {
+            if (route.getPath().equals(requestPath)) {
+                return buildNotAllowedResponse(request);
+            }
+        }
+
         Response response = new Response(StatusCode.NOT_FOUND);
         return response;
     }
 
     private Response buildOptionsResponse(Request request) {
-        Response response;
+        String allowedMethodsResponseLine = encodeAllowedMethodsToLine(buildAllowedMethods(request));
+        return new Response(StatusCode.OK, allowedMethodsResponseLine);
+    }
+
+    private Response buildHeadResponse(Request request) {
+        return new Response(StatusCode.OK);
+    }
+
+    private Response buildNotAllowedResponse(Request request) {
+        String allowedMethodsResponseLine = encodeAllowedMethodsToLine(buildAllowedMethods(request));
+        return new Response(StatusCode.NOT_ALLOWED, allowedMethodsResponseLine);
+    }
+
+    private ArrayList<String> buildAllowedMethods(Request request) {
         ArrayList<String> allowedMethods = new ArrayList<String>();
         for (Route route : this.routes) {
             if (route.getPath().equals(request.getPath())) {
                 allowedMethods.add(route.getMethod().name());
             }
         }
-        if (allowedMethods.isEmpty()) {
-            return new Response(StatusCode.NOT_FOUND);
+        if (!allowedMethods.contains(Method.HEAD.name())) {
+            allowedMethods.add(Method.HEAD.name());
         }
-        allowedMethods.add(Method.HEAD.name());
-        allowedMethods.add(Method.OPTIONS.name());
-        String listString = String.join(", ", allowedMethods);
-        String allowedResponseLine = "Allow: " + listString;
-        response = new Response(StatusCode.OK, allowedResponseLine);
-        return response;
+        if (!allowedMethods.contains(Method.OPTIONS.name())) {
+            allowedMethods.add(Method.OPTIONS.name());
+        }
+        return allowedMethods;
     }
 
-    private Response buildHeadResponse(Request request) {
-        return new Response(StatusCode.OK);
+    private String encodeAllowedMethodsToLine(ArrayList<String> allowedMethods) {
+        String listString = String.join(", ", allowedMethods);
+        String allowedMethodsResponseLine = "Allow: " + listString;
+        return allowedMethodsResponseLine;
     }
+
 }

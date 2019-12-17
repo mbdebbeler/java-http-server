@@ -15,11 +15,11 @@ public class RouterTest {
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
             return new Response(StatusCode.OK);
         });
+        Route route2 = new Route(Method.HEAD, "/test_route2", (request) -> {
+            return new Response(StatusCode.OK);
+        });
         routes.add(route1);
-<<<<<<< HEAD
-
-=======
->>>>>>> 7b3769f... Move request handling logic inside route, add routes
+        routes.add(route2);
     }
 
     @Test
@@ -70,6 +70,24 @@ public class RouterTest {
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
+    }
+
+
+    @Test
+    public void returnsNotAllowedForARequestWhenPathExistsButMethodDoesNot() {
+        Request testRequest = new Request("GET /test_route2");
+        Router testRouter = new Router(routes);
+        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
+        String actualStatusLine = testRouter.route(testRequest).getStatusLine();
+        String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
+        StatusCode expectedStatusCode = StatusCode.NOT_ALLOWED;
+        String expectedStatusLine = "HTTP/1.1 405 Method Not Allowed\r\n";
+        String expectedResponseAsString = "HTTP/1.1 405 Method Not Allowed\nAllow: HEAD, OPTIONS\r\n";
+
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
     }
 
 }

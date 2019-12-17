@@ -19,7 +19,7 @@ public class ConnectionHandler implements Runnable {
             add(new Route(Method.GET, "/simple_get", (request) -> {
                 return new Response(StatusCode.OK);
             }));
-            add(new Route(Method.GET, "/get_with_body", (request) -> {
+            add(new Route(Method.HEAD, "/get_with_body", (request) -> {
                 return new Response(StatusCode.OK);
             }));
             add(new Route(Method.GET, "/method_options", (request) -> {
