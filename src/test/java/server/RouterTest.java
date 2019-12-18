@@ -13,10 +13,10 @@ public class RouterTest {
     public void initializeTestRoutes() {
         routes = new ArrayList<Route>();
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
-            return new Response(StatusCode.OK);
+            return new ResponseBuilder().build();
         });
         Route route2 = new Route(Method.HEAD, "/test_route2", (request) -> {
-            return new Response(StatusCode.OK);
+            return new ResponseBuilder().build();
         });
         routes.add(route1);
         routes.add(route2);
