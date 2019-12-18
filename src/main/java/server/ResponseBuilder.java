@@ -1,5 +1,7 @@
 package server;
 
+import java.util.ArrayList;
+
 public class ResponseBuilder {
 
     private Response response;
@@ -17,7 +19,7 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder addAllowedMethods(String allowedMethods) {
+    public ResponseBuilder addAllowedMethods(ArrayList<String> allowedMethods) {
         this.response.allowedMethods = allowedMethods;
         return this;
     }

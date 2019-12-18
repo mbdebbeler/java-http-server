@@ -36,8 +36,8 @@ public class Router {
     }
 
     private Response buildOptionsResponse(Request request) {
-        String allowedMethodsResponseLine = encodeAllowedMethodsToLine(buildAllowedMethods(request));
-        return new ResponseBuilder().addAllowedMethods(allowedMethodsResponseLine).addStatusCode(StatusCode.OK).build();
+        ArrayList<String> allowedMethods = buildAllowedMethods(request);
+        return new ResponseBuilder().addAllowedMethods(allowedMethods).addStatusCode(StatusCode.OK).build();
     }
 
     private Response buildHeadResponse(Request request) {
@@ -45,8 +45,8 @@ public class Router {
     }
 
     private Response buildNotAllowedResponse(Request request) {
-        String allowedMethodsResponseLine = encodeAllowedMethodsToLine(buildAllowedMethods(request));
-        return new ResponseBuilder().addAllowedMethods(allowedMethodsResponseLine).addStatusCode(StatusCode.NOT_ALLOWED).build();
+        ArrayList<String> allowedMethods = buildAllowedMethods(request);
+        return new ResponseBuilder().addAllowedMethods(allowedMethods).addStatusCode(StatusCode.NOT_ALLOWED).build();
     }
 
     private ArrayList<String> buildAllowedMethods(Request request) {
@@ -65,10 +65,6 @@ public class Router {
         return allowedMethods;
     }
 
-    private String encodeAllowedMethodsToLine(ArrayList<String> allowedMethods) {
-        String listString = String.join(", ", allowedMethods);
-        String allowedMethodsResponseLine = "Allow: " + listString;
-        return allowedMethodsResponseLine;
-    }
+
 
 }
