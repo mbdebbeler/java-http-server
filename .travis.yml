@@ -23,9 +23,12 @@ deploy:
       all_branches: true
     region: us-east-2
 
+before_install:
+  - chmod +x ./scripts/*
+
 script:
-  - ./gradlew build && ./gradlew test
-  - zip -r latest *
-  - mkdir -p zipped_project
-  - mv latest.zip zipped_project/latest.zip
-  - ./clone_specs.sh
+  - ./scripts/build_and_run_unit_tests.sh
+  - ./scripts/zip_project.sh
+
+after_deploy:
+  - ./scripts/clone_and_run_acceptance_tests.sh
