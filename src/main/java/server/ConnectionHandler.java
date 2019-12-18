@@ -17,22 +17,22 @@ public class ConnectionHandler implements Runnable {
     public ArrayList<Route> makeRoutes() {
         return new ArrayList<Route>() {{
             add(new Route(Method.GET, "/simple_get", (request) -> {
-                return new Response(StatusCode.OK);
+                return new ResponseBuilder().build();
             }));
             add(new Route(Method.HEAD, "/get_with_body", (request) -> {
-                return new Response(StatusCode.OK);
+                return new ResponseBuilder().build();
             }));
             add(new Route(Method.GET, "/method_options", (request) -> {
-                return new Response(StatusCode.OK);
+                return new ResponseBuilder().build();
             }));
             add(new Route(Method.GET, "/method_options2", (request) -> {
-                return new Response(StatusCode.OK);
+                return new ResponseBuilder().build();
             }));
             add(new Route(Method.PUT, "/method_options2", (request) -> {
-                return new Response(StatusCode.OK);
+                return new ResponseBuilder().build();
             }));
             add(new Route(Method.POST, "/method_options2", (request) -> {
-                return new Response(StatusCode.OK);
+                return new ResponseBuilder().build();
             }));
         }};
     }

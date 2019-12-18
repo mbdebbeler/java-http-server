@@ -2,8 +2,7 @@ package server;
 
 public class Response {
     public StatusCode statusCode;
-
-    private String allowedMethods;
+    public String allowedMethods;
 
     public Response(StatusCode statusCode) {
         this.statusCode = statusCode;

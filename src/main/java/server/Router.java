@@ -32,22 +32,21 @@ public class Router {
             }
         }
 
-        Response response = new Response(StatusCode.NOT_FOUND);
-        return response;
+        return new ResponseBuilder().addStatusCode(StatusCode.NOT_FOUND).build();
     }
 
     private Response buildOptionsResponse(Request request) {
         String allowedMethodsResponseLine = encodeAllowedMethodsToLine(buildAllowedMethods(request));
-        return new Response(StatusCode.OK, allowedMethodsResponseLine);
+        return new ResponseBuilder().addAllowedMethods(allowedMethodsResponseLine).addStatusCode(StatusCode.OK).build();
     }
 
     private Response buildHeadResponse(Request request) {
-        return new Response(StatusCode.OK);
+        return new ResponseBuilder().build();
     }
 
     private Response buildNotAllowedResponse(Request request) {
         String allowedMethodsResponseLine = encodeAllowedMethodsToLine(buildAllowedMethods(request));
-        return new Response(StatusCode.NOT_ALLOWED, allowedMethodsResponseLine);
+        return new ResponseBuilder().addAllowedMethods(allowedMethodsResponseLine).addStatusCode(StatusCode.NOT_ALLOWED).build();
     }
 
     private ArrayList<String> buildAllowedMethods(Request request) {
