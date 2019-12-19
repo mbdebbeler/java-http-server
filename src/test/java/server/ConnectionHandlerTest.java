@@ -40,6 +40,7 @@ public class ConnectionHandlerTest {
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockServerLogger);
         connectionHandler.run();
         String expectedSentMessage = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
+
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();

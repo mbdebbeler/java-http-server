@@ -1,7 +1,11 @@
 .gradle
 /build/
 
+#Ignore jar to ensure rebuilt jar from Gradle is the one that gets deployed
+out/artifacts/java_http_server_jar/*.jar
+
 # Ignore logger so local logs don't get mixed up with deployed logs
+logger.log
 Logs/logger.log
 
 # Ignore Gradle GUI config

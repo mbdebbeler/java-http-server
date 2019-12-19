@@ -3,6 +3,7 @@ package server;
 import java.util.ArrayList;
 
 public class Router {
+
     ArrayList<Route> routes;
 
     public Router(ArrayList<Route> routes) {
@@ -24,30 +25,46 @@ public class Router {
             }
         }
 
-        Response response = new Response(StatusCode.NOT_FOUND);
-        return response;
+        for (Route route :
+                this.routes) {
+            if (route.getPath().equals(requestPath)) {
+                return buildNotAllowedResponse(request);
+            }
+        }
+
+        return new ResponseBuilder().addStatusCode(StatusCode.NOT_FOUND).build();
     }
 
     private Response buildOptionsResponse(Request request) {
-        Response response;
+        ArrayList<String> allowedMethods = buildAllowedMethods(request);
+        return new ResponseBuilder().addAllowedMethods(allowedMethods).addStatusCode(StatusCode.OK).build();
+    }
+
+    private Response buildHeadResponse(Request request) {
+        return new ResponseBuilder().build();
+    }
+
+    private Response buildNotAllowedResponse(Request request) {
+        ArrayList<String> allowedMethods = buildAllowedMethods(request);
+        return new ResponseBuilder().addAllowedMethods(allowedMethods).addStatusCode(StatusCode.NOT_ALLOWED).build();
+    }
+
+    private ArrayList<String> buildAllowedMethods(Request request) {
         ArrayList<String> allowedMethods = new ArrayList<String>();
         for (Route route : this.routes) {
             if (route.getPath().equals(request.getPath())) {
                 allowedMethods.add(route.getMethod().name());
             }
         }
-        if (allowedMethods.isEmpty()) {
-            return new Response(StatusCode.NOT_FOUND);
+        if (!allowedMethods.contains(Method.HEAD.name())) {
+            allowedMethods.add(Method.HEAD.name());
         }
-        allowedMethods.add(Method.HEAD.name());
-        allowedMethods.add(Method.OPTIONS.name());
-        String listString = String.join(", ", allowedMethods);
-        String allowedResponseLine = "Allow: " + listString;
-        response = new Response(StatusCode.OK, allowedResponseLine);
-        return response;
+        if (!allowedMethods.contains(Method.OPTIONS.name())) {
+            allowedMethods.add(Method.OPTIONS.name());
+        }
+        return allowedMethods;
     }
 
-    private Response buildHeadResponse(Request request) {
-        return new Response(StatusCode.OK);
-    }
+
+
 }

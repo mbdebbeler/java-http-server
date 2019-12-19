@@ -1,7 +1,7 @@
 package server;
 
 public enum StatusCode {
-    OK(200), BAD_REQUEST(400), NOT_FOUND(404);
+    OK(200), BAD_REQUEST(400), NOT_FOUND(404), NOT_ALLOWED(405);
 
     private final int value;
 
@@ -17,6 +17,8 @@ public enum StatusCode {
                 return "Bad Request";
             case NOT_FOUND:
                 return "Not Found";
+            case NOT_ALLOWED:
+                return "Method Not Allowed";
             default:
                 return "Unknown";
         }

@@ -13,9 +13,13 @@ public class RouterTest {
     public void initializeTestRoutes() {
         routes = new ArrayList<Route>();
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
-            return new Response(StatusCode.OK);
+            return new ResponseBuilder().build();
+        });
+        Route route2 = new Route(Method.HEAD, "/test_route2", (request) -> {
+            return new ResponseBuilder().build();
         });
         routes.add(route1);
+        routes.add(route2);
     }
 
     @Test
@@ -58,6 +62,7 @@ public class RouterTest {
     public void returnsNotFoundForAnOptionsRequestWhenPathDoesNotExist() {
         Request testRequest = new Request("OPTIONS /not_found_resources");
         Router testRouter = new Router(routes);
+
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         StatusCode expectedStatusCode = StatusCode.NOT_FOUND;
@@ -67,5 +72,22 @@ public class RouterTest {
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
     }
 
+
+    @Test
+    public void returnsNotAllowedForARequestWhenPathExistsButMethodDoesNot() {
+        Request testRequest = new Request("GET /test_route2");
+        Router testRouter = new Router(routes);
+        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
+        String actualStatusLine = testRouter.route(testRequest).getStatusLine();
+        String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
+        StatusCode expectedStatusCode = StatusCode.NOT_ALLOWED;
+        String expectedStatusLine = "HTTP/1.1 405 Method Not Allowed\r\n";
+        String expectedResponseAsString = "HTTP/1.1 405 Method Not Allowed\nAllow: HEAD, OPTIONS\r\n";
+
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
+    }
 
 }

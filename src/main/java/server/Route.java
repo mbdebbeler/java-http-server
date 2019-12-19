@@ -27,5 +27,4 @@ public class Route {
     public RequestHandler getRequestHandler() {
         return requestHandler;
     }
-
 }
