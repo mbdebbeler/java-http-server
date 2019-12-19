@@ -6,35 +6,14 @@ import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.FINE;
 
 public class ConnectionHandler implements Runnable {
-    public ISocket socket;
-    public ServerLogger serverLogger;
+    private ISocket socket;
+    private ServerLogger serverLogger;
+    private Router router;
 
-    public ConnectionHandler(ISocket socket, ServerLogger serverLogger) {
+    public ConnectionHandler(ISocket socket, Router router, ServerLogger serverLogger) {
         this.socket = socket;
         this.serverLogger = serverLogger;
-    }
-
-    public ArrayList<Route> makeRoutes() {
-        return new ArrayList<Route>() {{
-            add(new Route(Method.GET, "/simple_get", (request) -> {
-                return new ResponseBuilder().build();
-            }));
-            add(new Route(Method.HEAD, "/get_with_body", (request) -> {
-                return new ResponseBuilder().build();
-            }));
-            add(new Route(Method.GET, "/method_options", (request) -> {
-                return new ResponseBuilder().build();
-            }));
-            add(new Route(Method.GET, "/method_options2", (request) -> {
-                return new ResponseBuilder().build();
-            }));
-            add(new Route(Method.PUT, "/method_options2", (request) -> {
-                return new ResponseBuilder().build();
-            }));
-            add(new Route(Method.POST, "/method_options2", (request) -> {
-                return new ResponseBuilder().build();
-            }));
-        }};
+        this.router = router;
     }
 
     public void run() {
@@ -42,8 +21,7 @@ public class ConnectionHandler implements Runnable {
             String message = socket.receive();
             if (message != null) {
                 Request request = new Request(message);
-                Router router = new Router(makeRoutes());
-                Response response = router.route(request);
+                Response response = this.router.route(request);
                 String responseAsString = response.getAllPartsOfResponseAsString();
                 serverLogger.logSomething(INFO, responseAsString.trim());
                 socket.send(responseAsString);

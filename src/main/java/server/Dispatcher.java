@@ -3,16 +3,18 @@ package server;
 import java.io.IOException;
 
 public class Dispatcher implements IDispatcher {
-    public static IServerSocket serverSocket;
-    public ServerLogger serverLogger;
+    private static IServerSocket serverSocket;
+    private ServerLogger serverLogger;
+    private Router router;
 
-    public Dispatcher(IServerSocket serverSocket, ServerLogger serverLogger) {
+    public Dispatcher(IServerSocket serverSocket, Router router, ServerLogger serverLogger) {
         this.serverSocket = serverSocket;
+        this.router = router;
         this.serverLogger = serverLogger;
     }
 
     public Runnable createConnectionHandler() throws IOException {
-        return new ConnectionHandler(serverSocket.acceptConnection(), serverLogger);
+        return new ConnectionHandler(serverSocket.acceptConnection(), router, serverLogger);
     }
 
     public void listenAndDispatch(String[] args, IServerSocket serverSocket) throws IOException {
