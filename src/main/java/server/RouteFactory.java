@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.Method;
+
 import java.util.ArrayList;
 
 public class RouteFactory implements IRouteFactory {

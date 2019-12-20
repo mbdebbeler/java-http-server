@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.Method;
+
 public class Request {
     private String message;
 
@@ -18,6 +20,14 @@ public class Request {
 
     public String getPath() {
         return message.split(" ")[1];
+    }
+
+    public String getVersion() {
+        return message.split(" ")[2];
+    }
+
+    public String getBody() {
+        return message.split(" ")[2];
     }
 
 }

@@ -1,4 +1,4 @@
-package server;
+package HTTPComponents;
 
 public enum StatusCode {
     OK(200), BAD_REQUEST(400), NOT_FOUND(404), NOT_ALLOWED(405);
@@ -9,7 +9,7 @@ public enum StatusCode {
         this.value = value;
     }
 
-    String getReason() {
+    public String getReason() {
         switch (this) {
             case OK:
                 return "OK";
@@ -24,7 +24,7 @@ public enum StatusCode {
         }
     }
 
-    String getValueAsString() {
+    public String getValueAsString() {
         return String.valueOf(value);
     }
 }

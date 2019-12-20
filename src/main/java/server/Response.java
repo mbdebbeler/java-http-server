@@ -1,6 +1,11 @@
 package server;
 
+import HTTPComponents.StatusCode;
+import HTTPComponents.StatusLineComponents;
+
 import java.util.ArrayList;
+
+import static HTTPComponents.StatusLineComponents.*;
 
 public class Response {
     public StatusCode statusCode;
@@ -20,15 +25,15 @@ public class Response {
     }
 
     public String getStatusLine() {
-        return "HTTP/1.1" + " " + statusCode.getValueAsString() + " " + statusCode.getReason() + "\r\n";
+        return VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + CRLF;
     }
 
     public String getAllowedMethods() {
-        return this.allowedMethods != null ? "\n" + getAllowedMethodsAsFormattedString(this.allowedMethods) : "";
+        return this.allowedMethods != null ? NEWLINE + getAllowedMethodsAsFormattedString(this.allowedMethods) : "";
     }
 
     public String getAllPartsOfResponseAsString() {
-        return "HTTP/1.1" + " " + statusCode.getValueAsString() + " " + statusCode.getReason() + getAllowedMethods() + "\r\n";
+        return VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + getAllowedMethods() + CRLF;
     }
 
     private String getAllowedMethodsAsFormattedString(ArrayList<String> allowedMethods) {

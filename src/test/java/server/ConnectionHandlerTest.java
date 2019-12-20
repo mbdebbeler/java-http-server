@@ -1,5 +1,6 @@
 package server;
 
+import HTTPComponents.Method;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,11 @@ public class ConnectionHandlerTest {
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
             return new ResponseBuilder().build();
         });
+        Route route2 = new Route(Method.GET, "/test_route_with_body", (request) -> {
+            return new ResponseBuilder().build();
+        });
         routes.add(route1);
+        routes.add(route2);
         mockRouter = new Router(routes);
     }
 
@@ -48,12 +53,12 @@ public class ConnectionHandlerTest {
     }
 
     @Test
-    public void itSendsAllowedMethodsWhenItGetsAnOptionsRequest() {
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("OPTIONS /test_route");
+    public void itSendsAResponseWithBodyWhenItGetsARequestWithBody() {
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /test_route HTTP/1.1" + "\r\n" + "Where is the body?");
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
+        String expectedSentMessage = "HTTP/1.1 200 OK\r\nWhere is the body?\r\n";
 
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;

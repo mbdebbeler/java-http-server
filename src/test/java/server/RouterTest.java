@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.Method;
+import HTTPComponents.StatusCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;

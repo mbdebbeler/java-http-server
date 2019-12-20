@@ -1,5 +1,8 @@
 package server;
 
+import HTTPComponents.Method;
+import HTTPComponents.StatusCode;
+
 import java.util.ArrayList;
 
 public class Router {

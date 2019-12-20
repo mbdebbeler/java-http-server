@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.StatusCode;
+
 import java.util.ArrayList;
 
 public class ResponseBuilder {
