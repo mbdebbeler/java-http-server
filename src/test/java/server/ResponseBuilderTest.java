@@ -32,5 +32,18 @@ public class ResponseBuilderTest {
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
     }
 
+    @Test
+    public void responseBuildsResponseWithReceivedBody() {
+        String incomingRequest = "POST /simple_get HTTP/1.1\n" +
+                "Content-Length: 32\n" +
+                "Content-Type: text/html; charset=UTF-8\n" +
+                "\r\n" +
+                "some body that could be anything";
+        Request request = new Request(incomingRequest);
+
+        Response actualResponse = new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(request.getBody()).build();
+
+        Assert.assertEquals("HTTP/1.1 200 OK\r\nsome body that could be anything", actualResponse.getEntireResponse());
+    }
 
 }
