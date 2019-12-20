@@ -4,6 +4,8 @@ import HTTPComponents.StatusCode;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class ResponseBuilderTest {
 
     @Test
@@ -29,5 +31,6 @@ public class ResponseBuilderTest {
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
     }
+
 
 }

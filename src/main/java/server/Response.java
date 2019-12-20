@@ -10,6 +10,7 @@ import static HTTPComponents.StatusLineComponents.*;
 public class Response {
     public StatusCode statusCode;
     public ArrayList<String> allowedMethods;
+    public String body;
 
     public Response(StatusCode statusCode) {
         this.statusCode = statusCode;
@@ -18,6 +19,11 @@ public class Response {
     public Response(StatusCode statusCode, ArrayList<String> allowedMethods) {
         this.statusCode = statusCode;
         this.allowedMethods = allowedMethods;
+    }
+
+    public Response(StatusCode statusCode, String body) {
+        this.statusCode = statusCode;
+        this.body = body;
     }
 
     public StatusCode getStatusCode() {
@@ -32,8 +38,12 @@ public class Response {
         return this.allowedMethods != null ? NEWLINE + getAllowedMethodsAsFormattedString(this.allowedMethods) : "";
     }
 
-    public String getAllPartsOfResponseAsString() {
-        return VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + getAllowedMethods() + CRLF;
+    public String getBody() {
+        return this.body != null ? this.body : "";
+    }
+
+    public String getEntireResponse() {
+        return VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + getAllowedMethods() + CRLF + getBody();
     }
 
     private String getAllowedMethodsAsFormattedString(ArrayList<String> allowedMethods) {

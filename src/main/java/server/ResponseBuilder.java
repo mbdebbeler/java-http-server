@@ -26,4 +26,9 @@ public class ResponseBuilder {
         return this;
     }
 
+    public ResponseBuilder addBody(String body) {
+        this.response.body = body;
+        return this;
+    }
+
 }

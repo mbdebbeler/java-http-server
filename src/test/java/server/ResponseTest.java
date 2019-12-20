@@ -31,10 +31,18 @@ public class ResponseTest {
     }
 
     @Test
-    public void getAllPartsAsStringDoesNotEncodeASecondLineWhenThereIsNotOne() {
+    public void getEntireResponseDoesNotEncodeASecondLineWhenThereIsNotOne() {
         Response testResponse = new Response(StatusCode.OK);
-        String actual = testResponse.getAllPartsOfResponseAsString();
+        String actual = testResponse.getEntireResponse();
         String expected = "HTTP/1.1 200 OK\r\n";
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getEntireResponseReturnsBodyWhenRequestHasBody() {
+        Response testResponse = new Response(StatusCode.OK,"Where is the body?");
+        String actual = testResponse.getEntireResponse();
+        String expected = "HTTP/1.1 200 OK\r\nWhere is the body?";
         Assert.assertEquals(expected, actual);
     }
 
