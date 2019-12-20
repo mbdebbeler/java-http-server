@@ -53,12 +53,12 @@ public class ConnectionHandlerTest {
     }
 
     @Test
-    public void itSendsAResponseWithBodyWhenItGetsARequestWithBody() {
+    public void itCanAcceptARequestWithBody() {
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /test_route HTTP/1.1" + "\r\n" + "Where is the body?");
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK\r\nWhere is the body?\r\n";
+        String expectedSentMessage = "HTTP/1.1 200 OK\r\n";
 
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;

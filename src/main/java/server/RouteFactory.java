@@ -26,6 +26,9 @@ public class RouteFactory implements IRouteFactory {
             add(new Route(Method.POST, "/method_options2", (request) -> {
                 return new ResponseBuilder().build();
             }));
+            add(new Route(Method.POST, "/echo_body", (request) -> {
+                return new ResponseBuilder().addBody(request.getBody()).build();
+            }));
         }};
     }
 }

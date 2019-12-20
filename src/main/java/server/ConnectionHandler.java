@@ -1,7 +1,5 @@
 package server;
 
-import java.util.ArrayList;
-
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.FINE;
 
@@ -22,7 +20,7 @@ public class ConnectionHandler implements Runnable {
             if (message != null) {
                 Request request = new Request(message);
                 Response response = this.router.route(request);
-                String responseAsString = response.getAllPartsOfResponseAsString();
+                String responseAsString = response.getEntireResponse();
                 serverLogger.logSomething(INFO, responseAsString.trim());
                 socket.send(responseAsString);
             }
