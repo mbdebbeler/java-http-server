@@ -35,15 +35,33 @@ public class Response {
     }
 
     public String getAllowedMethods() {
-        return this.allowedMethods != null ? NEWLINE + getAllowedMethodsAsFormattedString(this.allowedMethods) : "";
+        return this.allowedMethods != null ? getAllowedMethodsAsFormattedString(this.allowedMethods) : "";
     }
 
     public String getBody() {
         return this.body != null ? this.body : "";
     }
 
+    public String getHeaders() {
+        if (this.body == null) {
+            return "";
+        }
+        String length = String.valueOf(this.body.length());
+        String headers = "Content-Length: "+ length + "\n" +
+                "Content-Type: text/html; charset=UTF-8\n";
+        return headers;
+    }
+
     public String getEntireResponse() {
-        return VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + getAllowedMethods() + CRLF + getBody();
+        return VERSION +
+                SPACE +
+                statusCode.getValueAsString() +
+                SPACE +
+                statusCode.getReason() +
+                NEWLINE +
+                getAllowedMethods() +
+                CRLF +
+                getBody();
     }
 
     private String getAllowedMethodsAsFormattedString(ArrayList<String> allowedMethods) {

@@ -1,6 +1,7 @@
 package server;
 
 import HTTPComponents.Method;
+import HTTPComponents.StatusCode;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +20,14 @@ public class ConnectionHandlerTest {
         Route route2 = new Route(Method.GET, "/test_route_with_body", (request) -> {
             return new ResponseBuilder().build();
         });
+        Route route3 = new Route(Method.POST, "/echo_body", (request) -> {
+            String body = request.getBody();
+            ResponseBuilder responseBuilder = new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(body);
+            return responseBuilder.build();
+        });
         routes.add(route1);
         routes.add(route2);
+        routes.add(route3);
         mockRouter = new Router(routes);
     }
 
@@ -54,7 +61,12 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itCanAcceptARequestWithBody() {
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /test_route HTTP/1.1" + "\r\n" + "Where is the body?");
+        String testRequest = "GET /test_route_with_body HTTP/1.1\n" +
+                "Content-Length: 9\n" +
+                "Content-Type: application/x-www-form-urlencoded\n" +
+                "\r\n" +
+                "some body";
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
@@ -66,5 +78,30 @@ public class ConnectionHandlerTest {
         Assert.assertEquals(expectedSentMessage, actualSentMessage);
         Assert.assertEquals(expectedIsClosed, actualIsClosed);
     }
+
+    @Test
+    public void itAcceptsPOSTRequestsWithHeadersAndEchoesTheBody() {
+        String testRequest = "POST /echo_body HTTP/1.1\n" +
+                "Content-Length: 32\n" +
+                "Content-Type: application/x-www-form-urlencoded\n" +
+                "\r\n" +
+                "Where is the body?";
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
+        ServerLogger mockServerLogger = new ServerLogger();
+        ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
+        connectionHandler.run();
+        String expectedSentMessage = "HTTP/1.1 200 OK\r\nWhere is the body?";
+
+        String actualSentMessage = mockSocketWrapper.getSentData();
+        Boolean expectedIsClosed = true;
+        Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
+
+        Assert.assertEquals(expectedSentMessage, actualSentMessage);
+        Assert.assertEquals(expectedIsClosed, actualIsClosed);
+    }
+
+
+
+
 
 }

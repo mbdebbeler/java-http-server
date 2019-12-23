@@ -38,7 +38,14 @@ public class Request {
     }
 
     public String getBody() {
-        return message.split(CRLF, 2)[1];
+        try {
+            String[] splitMessage = message.split(CRLF + CRLF, 2);
+            String body = splitMessage[1].trim();
+            return body;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public ArrayList<String> splitRequest(String incomingRequest) {

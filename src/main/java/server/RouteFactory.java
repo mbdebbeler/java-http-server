@@ -1,6 +1,7 @@
 package server;
 
 import HTTPComponents.Method;
+import HTTPComponents.StatusCode;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class RouteFactory implements IRouteFactory {
                 return new ResponseBuilder().build();
             }));
             add(new Route(Method.POST, "/echo_body", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(request.getBody()).build();
             }));
         }};
     }

@@ -11,27 +11,34 @@ import static java.util.logging.Level.FINE;
 public class SocketWrapper implements ISocket {
     private BufferedReader input;
     private PrintWriter output;
-    private ServerLogger serverLogger = new ServerLogger();
 
-    public SocketWrapper(Socket socket) throws IOException {
-        Socket clientSocket = socket;
-        input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        output = new PrintWriter(clientSocket.getOutputStream(), true);
+    public SocketWrapper(Socket socket) {
+        try {
+            this.input = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+            this.output = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String receive() {
+        char[] dataBuffer = new char[100];
         try {
-            return input.readLine();
+            String incomingData = "";
+            while(input.ready()) {
+                int value = input.read(dataBuffer);
+                incomingData += new String(dataBuffer,0, value);
+            }
+            return incomingData;
         } catch (IOException e) {
-            String inputError = "[-] Input not received.";
-            System.err.println(inputError);
-            serverLogger.logSomething(FINE, e.getMessage());
+            e.printStackTrace();
+            return e.toString();
         }
-        return null;
     }
 
     public void send(String data) {
-        output.println(data);
+        output.print(data);
     }
 
     public void close() {
@@ -41,7 +48,6 @@ public class SocketWrapper implements ISocket {
         } catch (IOException e) {
             String shutdownError = "[-] Shutdown error.";
             System.err.println(shutdownError);
-            serverLogger.logSomething(FINE, e.getMessage());
         }
     }
 }
