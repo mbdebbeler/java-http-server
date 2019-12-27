@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.Method;
+
 public class Route {
 
     interface RequestHandler {

@@ -1,5 +1,13 @@
 package server;
 
+import HTTPComponents.Method;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+import static HTTPComponents.StatusLineComponents.CRLF;
+
 public class Request {
     private String message;
 
@@ -18,6 +26,41 @@ public class Request {
 
     public String getPath() {
         return message.split(" ")[1];
+    }
+
+    public String getVersion() {
+        return message.split(" ")[2];
+    }
+
+    public HashMap<String, String> getHeaders() {
+        String headers = message.split(CRLF)[0];
+        return getHeaderKeyValuePairs(splitRequest(headers));
+    }
+
+    public String getBody() {
+        try {
+            String[] splitMessage = message.split(CRLF + CRLF, 2);
+            String body = splitMessage[1].trim();
+            return body;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public ArrayList<String> splitRequest(String incomingRequest) {
+        String[] requestHeaders = incomingRequest.split("\n");
+        ArrayList<String> headers = new ArrayList<String>(Arrays.asList(requestHeaders));
+        headers.remove(0);
+        return headers;
+    }
+
+    public HashMap<String, String> getHeaderKeyValuePairs(ArrayList<String> headers) {
+        HashMap<String, String> splitHeaders = new HashMap<String, String>();
+        for (String header : headers) {
+            splitHeaders.put(header.split(": ")[0], header.split(": ")[1]);
+        }
+        return splitHeaders;
     }
 
 }

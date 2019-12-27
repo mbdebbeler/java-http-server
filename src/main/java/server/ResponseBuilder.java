@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.StatusCode;
+
 import java.util.ArrayList;
 
 public class ResponseBuilder {
@@ -21,6 +23,11 @@ public class ResponseBuilder {
 
     public ResponseBuilder addAllowedMethods(ArrayList<String> allowedMethods) {
         this.response.allowedMethods = allowedMethods;
+        return this;
+    }
+
+    public ResponseBuilder addBody(String body) {
+        this.response.body = body;
         return this;
     }
 

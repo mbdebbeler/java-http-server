@@ -1,5 +1,7 @@
 package server;
 
+import HTTPComponents.Method;
+import HTTPComponents.StatusCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
@@ -18,8 +20,12 @@ public class RouterTest {
         Route route2 = new Route(Method.HEAD, "/test_route2", (request) -> {
             return new ResponseBuilder().build();
         });
+        Route route3 = new Route(Method.POST, "/test_route3", (request) -> {
+            return new ResponseBuilder().addBody(request.getBody()).build();
+        });
         routes.add(route1);
         routes.add(route2);
+        routes.add(route3);
     }
 
     @Test
@@ -48,7 +54,7 @@ public class RouterTest {
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
-        String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
+        String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.OK;
         String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
         String expectedResponseAsString = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
@@ -79,7 +85,7 @@ public class RouterTest {
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
-        String actualResponseAsString = testRouter.route(testRequest).getAllPartsOfResponseAsString();
+        String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.NOT_ALLOWED;
         String expectedStatusLine = "HTTP/1.1 405 Method Not Allowed\r\n";
         String expectedResponseAsString = "HTTP/1.1 405 Method Not Allowed\nAllow: HEAD, OPTIONS\r\n";
@@ -88,6 +94,24 @@ public class RouterTest {
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
+    }
+
+    @Test
+    public void returnsAResponseWithBodyToAPOSTRequestWithBody(){
+        Request testRequest = new Request("POST /test_route3 HTTP/1.1\r\nWhere is the body?");
+        Router testRouter = new Router(routes);
+        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
+        String actualStatusLine = testRouter.route(testRequest).getStatusLine();
+        String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
+        StatusCode expectedStatusCode = StatusCode.OK;
+        String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
+        String expectedResponseAsString = "HTTP/1.1 200 OK\r\nWhere is the body?";
+
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
+
     }
 
 }
