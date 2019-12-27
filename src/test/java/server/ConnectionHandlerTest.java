@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static HTTPComponents.StatusLineComponents.CRLF;
+import static HTTPComponents.StatusLineComponents.NEWLINE;
+
 public class ConnectionHandlerTest {
     Router mockRouter;
 
@@ -37,7 +40,7 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK\r\n";
+        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF;
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
@@ -51,7 +54,7 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 404 Not Found\r\n";
+        String expectedSentMessage = "HTTP/1.1 404 Not Found" + CRLF;
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
@@ -61,16 +64,16 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itCanAcceptARequestWithBody() {
-        String testRequest = "GET /test_route_with_body HTTP/1.1\n" +
-                "Content-Length: 9\n" +
-                "Content-Type: application/x-www-form-urlencoded\n" +
-                "\r\n" +
+        String testRequest = "GET /test_route_with_body HTTP/1.1" + NEWLINE +
+                "Content-Length: 9" + NEWLINE +
+                "Content-Type: application/x-www-form-urlencoded" + NEWLINE +
+                CRLF + CRLF +
                 "some body";
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK\r\n";
+        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF;
 
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;
@@ -81,16 +84,16 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itAcceptsPOSTRequestsWithHeadersAndEchoesTheBody() {
-        String testRequest = "POST /echo_body HTTP/1.1\n" +
-                "Content-Length: 32\n" +
-                "Content-Type: application/x-www-form-urlencoded\n" +
-                "\r\n" +
+        String testRequest = "POST /echo_body HTTP/1.1" + NEWLINE +
+                "Content-Length: 32" + NEWLINE +
+                "Content-Type: application/x-www-form-urlencoded" + NEWLINE +
+                CRLF + CRLF +
                 "Where is the body?";
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK\r\nWhere is the body?";
+        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF + CRLF + "Where is the body?";
 
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;

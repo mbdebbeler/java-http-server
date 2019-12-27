@@ -39,7 +39,7 @@ public class Response {
     }
 
     public String getBody() {
-        return this.body != null ? this.body : "";
+        return this.body != null ? CRLF + this.body : "";
     }
 
     public String getHeaders() {
@@ -47,8 +47,8 @@ public class Response {
             return "";
         }
         String length = String.valueOf(this.body.length());
-        String headers = "Content-Length: "+ length + "\n" +
-                "Content-Type: text/html; charset=UTF-8\n";
+        String headers = "Content-Length: "+ length + NEWLINE +
+                "Content-Type: text/html; charset=UTF-8" + NEWLINE;
         return headers;
     }
 
@@ -58,7 +58,6 @@ public class Response {
                 statusCode.getValueAsString() +
                 SPACE +
                 statusCode.getReason() +
-                NEWLINE +
                 getAllowedMethods() +
                 CRLF +
                 getBody();
@@ -66,7 +65,7 @@ public class Response {
 
     private String getAllowedMethodsAsFormattedString(ArrayList<String> allowedMethods) {
         String listString = String.join(", ", allowedMethods);
-        String allowedMethodsResponseLine = "Allow: " + listString;
+        String allowedMethodsResponseLine = "\nAllow: " + listString;
         return allowedMethodsResponseLine;
     }
 }
