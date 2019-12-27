@@ -57,7 +57,7 @@ public class RequestTest {
 
     @Test
     public void getBodyReturnsABodyWhenThereIsABody() {
-        Request testRequest = new Request(GET + "/test_path" + VERSION + CRLF + "Where is the body?");
+        Request testRequest = new Request(GET + "/test_path" + VERSION + CRLF + CRLF + "Where is the body?");
         String actual = testRequest.getBody();
         String expected = "Where is the body?";
         Assert.assertEquals(expected, actual);

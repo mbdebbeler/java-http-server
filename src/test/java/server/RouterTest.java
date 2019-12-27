@@ -8,6 +8,9 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 
+import static HTTPComponents.StatusLineComponents.CRLF;
+import static HTTPComponents.StatusLineComponents.NEWLINE;
+
 public class RouterTest {
     private ArrayList<Route> routes;
 
@@ -56,8 +59,8 @@ public class RouterTest {
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.OK;
-        String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
-        String expectedResponseAsString = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS\r\n";
+        String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
+        String expectedResponseAsString = "HTTP/1.1 200 OK\nAllow: GET, HEAD, OPTIONS" + CRLF;
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
@@ -72,7 +75,7 @@ public class RouterTest {
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         StatusCode expectedStatusCode = StatusCode.NOT_FOUND;
-        String expectedStatusLine = "HTTP/1.1 404 Not Found\r\n";
+        String expectedStatusLine = "HTTP/1.1 404 Not Found" + CRLF;
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
@@ -87,8 +90,8 @@ public class RouterTest {
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.NOT_ALLOWED;
-        String expectedStatusLine = "HTTP/1.1 405 Method Not Allowed\r\n";
-        String expectedResponseAsString = "HTTP/1.1 405 Method Not Allowed\nAllow: HEAD, OPTIONS\r\n";
+        String expectedStatusLine = "HTTP/1.1 405 Method Not Allowed" + CRLF;
+        String expectedResponseAsString = "HTTP/1.1 405 Method Not Allowed\nAllow: HEAD, OPTIONS" + CRLF;
 
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
@@ -98,14 +101,14 @@ public class RouterTest {
 
     @Test
     public void returnsAResponseWithBodyToAPOSTRequestWithBody(){
-        Request testRequest = new Request("POST /test_route3 HTTP/1.1\r\nWhere is the body?");
+        Request testRequest = new Request("POST /test_route3 HTTP/1.1" + CRLF + CRLF + "Where is the body?");
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
         String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.OK;
-        String expectedStatusLine = "HTTP/1.1 200 OK\r\n";
-        String expectedResponseAsString = "HTTP/1.1 200 OK\r\nWhere is the body?";
+        String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
+        String expectedResponseAsString = "HTTP/1.1 200 OK" + CRLF + CRLF + "Where is the body?";
 
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
