@@ -4,10 +4,6 @@ import HTTPComponents.Method;
 
 public class Route {
 
-    interface RequestHandler {
-        Response handle(Request request);
-    }
-
     private Method method;
     private String path;
     private RequestHandler requestHandler;
