@@ -103,6 +103,29 @@ public class ConnectionHandlerTest {
         Assert.assertEquals(expectedIsClosed, actualIsClosed);
     }
 
+    @Test
+    public void itRedirectsRequestsAndIncludesNewLocationInHeader() {
+        String testRequest = "GET /redirect HTTP/1.1" + NEWLINE +
+                "Content-Length: 21" + NEWLINE +
+                "Content-Type: application/x-www-form-urlencoded" + NEWLINE +
+                CRLF;
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
+        ServerLogger mockServerLogger = new ServerLogger();
+        ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
+        connectionHandler.run();
+        String expectedSentMessage = "HTTP/1.1 301 Moved Permanently" +
+                NEWLINE +
+                "Location: http://0.0.0.0:5000/simple_get" + NEWLINE +
+                CRLF;
+
+        String actualSentMessage = mockSocketWrapper.getSentData();
+        Boolean expectedIsClosed = true;
+        Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
+
+        Assert.assertEquals(expectedSentMessage, actualSentMessage);
+        Assert.assertEquals(expectedIsClosed, actualIsClosed);
+    }
+
 
 
 

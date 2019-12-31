@@ -1,7 +1,7 @@
 package HTTPComponents;
 
 public enum StatusCode {
-    OK(200), BAD_REQUEST(400), NOT_FOUND(404), NOT_ALLOWED(405);
+    OK(200), BAD_REQUEST(400), NOT_FOUND(404), NOT_ALLOWED(405), MOVED_PERMANENTLY(301);
 
     private final int value;
 
@@ -19,6 +19,8 @@ public enum StatusCode {
                 return "Not Found";
             case NOT_ALLOWED:
                 return "Method Not Allowed";
+            case MOVED_PERMANENTLY:
+                return "Moved Permanently";
             default:
                 return "Unknown";
         }

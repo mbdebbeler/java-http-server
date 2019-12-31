@@ -117,4 +117,22 @@ public class RouterTest {
 
     }
 
+    @Test
+    public void redirectsAnInvalidPathRequest(){
+        Request testRequest = new Request("GET /test_redirect_route HTTP/1.1");
+        Router testRouter = new Router(routes);
+        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
+        String actualStatusLine = testRouter.route(testRequest).getStatusLine();
+        String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
+        StatusCode expectedStatusCode = StatusCode.MOVED_PERMANENTLY;
+        String expectedStatusLine = "HTTP/1.1 301 Moved Permanently";
+        String expectedResponseAsString = "HTTP/1.1 301 Moved Permanently";
+
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
+    }
+
+
 }
