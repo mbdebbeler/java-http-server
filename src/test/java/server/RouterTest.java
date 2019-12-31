@@ -2,6 +2,7 @@ package server;
 
 import HTTPComponents.Method;
 import HTTPComponents.StatusCode;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
@@ -26,9 +27,16 @@ public class RouterTest {
         Route route3 = new Route(Method.POST, "/test_route3", (request) -> {
             return new ResponseBuilder().addBody(request.getBody()).build();
         });
+        Route route4 = new Route(Method.GET, "/test_redirect_route", (request) -> {
+            return new ResponseBuilder()
+                    .addRedirect("http://127.0.0.1:5000/simple_get")
+                    .addStatusCode(StatusCode.MOVED_PERMANENTLY)
+                    .build();
+        });
         routes.add(route1);
         routes.add(route2);
         routes.add(route3);
+        routes.add(route4);
     }
 
     @Test
@@ -93,14 +101,13 @@ public class RouterTest {
         String expectedStatusLine = "HTTP/1.1 405 Method Not Allowed" + CRLF;
         String expectedResponseAsString = "HTTP/1.1 405 Method Not Allowed\nAllow: HEAD, OPTIONS" + CRLF;
 
-
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
     }
 
     @Test
-    public void returnsAResponseWithBodyToAPOSTRequestWithBody(){
+    public void returnsAResponseWithBodyToAPOSTRequestWithBody() {
         Request testRequest = new Request("POST /test_route3 HTTP/1.1" + CRLF + CRLF + "Where is the body?");
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
@@ -110,7 +117,6 @@ public class RouterTest {
         String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
         String expectedResponseAsString = "HTTP/1.1 200 OK" + CRLF + CRLF + "Where is the body?";
 
-
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
@@ -118,21 +124,22 @@ public class RouterTest {
     }
 
     @Test
-    public void redirectsAnInvalidPathRequest(){
+    public void redirectsAnInvalidPathRequest() {
         Request testRequest = new Request("GET /test_redirect_route HTTP/1.1");
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = testRouter.route(testRequest).getStatusLine();
+        String actualHeaders = testRouter.route(testRequest).getHeaders();
         String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.MOVED_PERMANENTLY;
-        String expectedStatusLine = "HTTP/1.1 301 Moved Permanently";
-        String expectedResponseAsString = "HTTP/1.1 301 Moved Permanently";
+        String expectedHeaders = NEWLINE + "Location: http://127.0.0.1:5000/simple_get";
+        String expectedStatusLine = "HTTP/1.1 301 Moved Permanently" + CRLF;
+        String expectedResponseAsString = "HTTP/1.1 301 Moved Permanently" + NEWLINE + "Location: http://127.0.0.1:5000/simple_get" + CRLF;
 
-
+        Assert.assertEquals(expectedHeaders, actualHeaders);
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponseAsString, actualResponseAsString);
     }
-
 
 }

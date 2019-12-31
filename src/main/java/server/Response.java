@@ -11,6 +11,7 @@ public class Response {
     public StatusCode statusCode;
     public ArrayList<String> allowedMethods;
     public String body;
+    public String headers;
 
     public Response(StatusCode statusCode) {
         this.statusCode = statusCode;
@@ -24,6 +25,7 @@ public class Response {
     public Response(StatusCode statusCode, String body) {
         this.statusCode = statusCode;
         this.body = body;
+        this.headers = null;
     }
 
     public StatusCode getStatusCode() {
@@ -43,13 +45,14 @@ public class Response {
     }
 
     public String getHeaders() {
-        if (this.body == null) {
+        if (this.body == null && this.headers == null) {
             return "";
+        } else if (this.body != null) {
+            String length = String.valueOf(this.body.length());
+            this.headers += "Content-Length: " + length + NEWLINE +
+                    "Content-Type: text/html; charset=UTF-8";
         }
-        String length = String.valueOf(this.body.length());
-        String headers = "Content-Length: "+ length + NEWLINE +
-                "Content-Type: text/html; charset=UTF-8" + NEWLINE;
-        return headers;
+        return NEWLINE + this.headers;
     }
 
     public String getEntireResponse() {
@@ -59,13 +62,14 @@ public class Response {
                 SPACE +
                 statusCode.getReason() +
                 getAllowedMethods() +
+                getHeaders() +
                 CRLF +
                 getBody();
     }
 
     private String getAllowedMethodsAsFormattedString(ArrayList<String> allowedMethods) {
         String listString = String.join(", ", allowedMethods);
-        String allowedMethodsResponseLine = "\nAllow: " + listString;
+        String allowedMethodsResponseLine = NEWLINE + "Allow: " + listString;
         return allowedMethodsResponseLine;
     }
 }

@@ -28,8 +28,18 @@ public class RouteFactory implements IRouteFactory {
                 return new ResponseBuilder().build();
             }));
             add(new Route(Method.POST, "/echo_body", (request) -> {
-                return new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(request.getBody()).build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .addBody(request.getBody())
+                        .build();
             }));
+            add(new Route(Method.GET, "/redirect", (request) -> {
+                return new ResponseBuilder()
+                        .addRedirect("http://127.0.0.1:5000/simple_get")
+                        .addStatusCode(StatusCode.MOVED_PERMANENTLY)
+                        .build();
+            }));
+
         }};
     }
 }

@@ -31,4 +31,14 @@ public class ResponseBuilder {
         return this;
     }
 
+    public ResponseBuilder addHeaders(String string) {
+        this.response.headers = string;
+        return this;
+    }
+
+    public ResponseBuilder addRedirect(String redirectedLocation) {
+        addHeaders("Location: " + redirectedLocation);
+        return this;
+    }
+
 }
