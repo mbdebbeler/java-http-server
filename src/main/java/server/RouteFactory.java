@@ -39,6 +39,18 @@ public class RouteFactory implements IRouteFactory {
                         .addStatusCode(StatusCode.MOVED_PERMANENTLY)
                         .build();
             }));
+            add(new Route(Method.GET, "/echo_file_contents", (request) -> {
+                return new ResponseBuilder()
+                        .addTextBodyFromFile("../test.txt")
+                        .addStatusCode(StatusCode.OK)
+                        .build();
+            }));
+            add(new Route(Method.GET, "/echo_image_contents", (request) -> {
+                return new ResponseBuilder()
+                        .addImageBodyFromFile("../small-test.jpeg")
+                        .addStatusCode(StatusCode.OK)
+                        .build();
+            }));
 
         }};
     }

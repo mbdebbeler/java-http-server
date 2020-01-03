@@ -45,7 +45,14 @@ public class ResponseTest {
     public void getEntireResponseReturnsBodyWhenRequestHasBody() {
         Response testResponse = new Response(StatusCode.OK,"Where is the body?");
         String actual = testResponse.getEntireResponse();
-        String expected = "HTTP/1.1 200 OK" + CRLF + CRLF + "Where is the body?";
+        String expected = "HTTP/1.1 200 OK"
+                + NEWLINE
+                + "Content-Length: 18"
+                + NEWLINE
+                + "Content-Type: text/html"
+                + CRLF
+                + CRLF
+                + "Where is the body?";
         Assert.assertEquals(expected, actual);
     }
 

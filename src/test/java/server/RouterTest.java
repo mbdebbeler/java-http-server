@@ -2,7 +2,6 @@ package server;
 
 import HTTPComponents.Method;
 import HTTPComponents.StatusCode;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
@@ -115,7 +114,14 @@ public class RouterTest {
         String actualResponseAsString = testRouter.route(testRequest).getEntireResponse();
         StatusCode expectedStatusCode = StatusCode.OK;
         String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
-        String expectedResponseAsString = "HTTP/1.1 200 OK" + CRLF + CRLF + "Where is the body?";
+        String expectedResponseAsString = "HTTP/1.1 200 OK"
+                + NEWLINE
+                + "Content-Length: 18"
+                + NEWLINE
+                + "Content-Type: text/html"
+                + CRLF
+                + CRLF
+                + "Where is the body?";
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);

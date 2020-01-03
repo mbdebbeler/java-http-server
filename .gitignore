@@ -5,8 +5,9 @@
 out/artifacts/java_http_server_jar/*.jar
 
 # Ignore logger so local logs don't get mixed up with deployed logs
+*.log.*
+Logs/
 logger.log
-Logs/logger.log
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -16,6 +17,9 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+#DS_Store
+.DS_Store
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
