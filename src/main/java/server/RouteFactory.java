@@ -35,7 +35,7 @@ public class RouteFactory implements IRouteFactory {
             }));
             add(new Route(Method.GET, "/redirect", (request) -> {
                 return new ResponseBuilder()
-                        .addRedirect("http://127.0.0.1:5000/simple_get")
+                        .addRedirect("http://0.0.0.0:5000/simple_get")
                         .addStatusCode(StatusCode.MOVED_PERMANENTLY)
                         .build();
             }));
