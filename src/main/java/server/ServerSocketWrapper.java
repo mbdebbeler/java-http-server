@@ -20,7 +20,6 @@ public class ServerSocketWrapper implements IServerSocket {
             serverSocket = new ServerSocket(portNumber);
             String waitingConnection = String.format("[-] Listening for connection on port %s", portNumber);
             serverLogger.logSomething(INFO, waitingConnection);
-            System.out.println(waitingConnection);
         } catch (IOException e) {
             String connectionError = String.format("[-] Could not listen on port %s", portNumber);
             serverLogger.logSomething(FINE, e.getMessage());
@@ -32,7 +31,6 @@ public class ServerSocketWrapper implements IServerSocket {
         try {
             Socket clientSocket = serverSocket.accept();
             String acceptedConnection = "[-] Accepted connection";
-            System.out.println(acceptedConnection);
             serverLogger.logSomething(INFO, acceptedConnection);
             return new SocketWrapper(clientSocket);
         } catch (IOException e) {

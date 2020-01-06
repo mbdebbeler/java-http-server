@@ -25,7 +25,7 @@ public class Response {
     public Response(StatusCode statusCode, String body) {
         this.statusCode = statusCode;
         this.body = body;
-        this.headers = null;
+        this.headers = "";
     }
 
     public StatusCode getStatusCode() {
@@ -49,8 +49,8 @@ public class Response {
             return "";
         } else if (this.body != null) {
             String length = String.valueOf(this.body.length());
-            this.headers += "Content-Length: " + length + NEWLINE +
-                    "Content-Type: text/html; charset=UTF-8";
+            this.headers = "Content-Length: " + length + NEWLINE;
+            this.headers += "Content-Type: text/html";
         }
         return NEWLINE + this.headers;
     }
