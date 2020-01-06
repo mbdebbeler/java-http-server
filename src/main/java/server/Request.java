@@ -37,15 +37,15 @@ public class Request {
         return getHeaderKeyValuePairs(splitRequest(headers));
     }
 
-    public String getBody() {
+    public byte[] getBody() {
         try {
             String[] splitMessage = message.split(CRLF + CRLF, 2);
-            String body = splitMessage[1].trim();
+            byte[] body = splitMessage[1].trim().getBytes();
             return body;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return "".getBytes();
     }
 
     public ArrayList<String> splitRequest(String incomingRequest) {

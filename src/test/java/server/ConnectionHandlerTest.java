@@ -18,15 +18,20 @@ public class ConnectionHandlerTest {
     public void initializeTestRouterWithRoutes() {
         ArrayList<Route> routes = new ArrayList<Route>();
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
-            return new ResponseBuilder().build();
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.OK)
+                    .build();
         });
         Route route2 = new Route(Method.GET, "/test_route_with_body", (request) -> {
-            return new ResponseBuilder().build();
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.OK)
+                    .build();
         });
         Route route3 = new Route(Method.POST, "/echo_body", (request) -> {
-            String body = request.getBody();
-            ResponseBuilder responseBuilder = new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(body);
-            return responseBuilder.build();
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.OK)
+                    .addBody(request.getBody())
+                    .build();
         });
         Route route4 = new Route(Method.GET, "/test_redirect", (request) -> {
             return new ResponseBuilder()
@@ -48,7 +53,7 @@ public class ConnectionHandlerTest {
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
         String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF;
-        String actualSentMessage = mockSocketWrapper.getSentData();
+        String actualSentMessage = new String(mockSocketWrapper.getSentData());
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
         Assert.assertEquals(expectedSentMessage, actualSentMessage);

@@ -1,7 +1,7 @@
 package server;
 
 public class MockSocketWrapper implements ISocket {
-    public static String sentData;
+    public static byte[] sentData;
     private String testMessage;
     public static boolean closeWasCalled = false;
 
@@ -17,12 +17,12 @@ public class MockSocketWrapper implements ISocket {
         return testMessage;
     }
 
-    public void send(String data) {
+    public void send(byte[] data) {
         sentData = data;
     }
 
-    public String getSentData() {
-        return sentData;
+    public String getSentDataAsString() {
+        return new String(sentData);
     }
 
     public void close() {

@@ -1,75 +1,63 @@
 package server;
 
 import HTTPComponents.StatusCode;
-import HTTPComponents.StatusLineComponents;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static HTTPComponents.StatusLineComponents.*;
 
 public class Response {
-    public StatusCode statusCode;
-    public ArrayList<String> allowedMethods;
-    public String body;
-    public String headers;
+    private StatusCode statusCode;
+    private byte[] body;
+    private HashMap<String, String> headers;
 
-    public Response(StatusCode statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public Response(StatusCode statusCode, ArrayList<String> allowedMethods) {
-        this.statusCode = statusCode;
-        this.allowedMethods = allowedMethods;
-    }
-
-    public Response(StatusCode statusCode, String body) {
-        this.statusCode = statusCode;
-        this.body = body;
-        this.headers = "";
+    public Response(ResponseBuilder responseBuilder) {
+        this.statusCode = responseBuilder.statusCode;
+        this.body = responseBuilder.body;
+        this.headers = responseBuilder.headers;
     }
 
     public StatusCode getStatusCode() {
         return statusCode;
     }
 
-    public String getStatusLine() {
-        return VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + CRLF;
+    public byte[] getStatusLine() {
+        return (VERSION + SPACE + statusCode.getValueAsString() + SPACE + statusCode.getReason() + CRLF).getBytes();
     }
 
-    public String getAllowedMethods() {
-        return this.allowedMethods != null ? getAllowedMethodsAsFormattedString(this.allowedMethods) : "";
+    private byte[] getHeaders() {
+        return (formatHeaders(this.headers) + CRLF).getBytes();
     }
 
-    public String getBody() {
-        return this.body != null ? CRLF + this.body : "";
-    }
-
-    public String getHeaders() {
-        if (this.body == null && this.headers == null) {
-            return "";
-        } else if (this.body != null) {
-            String length = String.valueOf(this.body.length());
-            this.headers = "Content-Length: " + length + NEWLINE;
-            this.headers += "Content-Type: text/html";
+    private String formatHeaders(HashMap<String, String> headers) {
+        Set<Map.Entry<String, String>> headersSet = headers.entrySet();
+        String formattedHeader = "";
+        for (Map.Entry entry : headersSet) {
+            Object header = entry.getKey();
+            Object value = entry.getValue();
+            formattedHeader += header.toString() + ": " + value.toString() + CRLF;
         }
-        return NEWLINE + this.headers;
+        return formattedHeader;
     }
 
-    public String getEntireResponse() {
-        return VERSION +
-                SPACE +
-                statusCode.getValueAsString() +
-                SPACE +
-                statusCode.getReason() +
-                getAllowedMethods() +
-                getHeaders() +
-                CRLF +
-                getBody();
+    public byte[] getBody() {
+        return this.body == null ? "".getBytes() : this.body;
     }
 
-    private String getAllowedMethodsAsFormattedString(ArrayList<String> allowedMethods) {
-        String listString = String.join(", ", allowedMethods);
-        String allowedMethodsResponseLine = NEWLINE + "Allow: " + listString;
-        return allowedMethodsResponseLine;
+    public byte[] getResponseBytes() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            outputStream.write(this.getStatusLine());
+            outputStream.write(this.getHeaders() == null ? "".getBytes() : this.getHeaders());
+            outputStream.write(this.getBody() == null ? "".getBytes() : this.getBody());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
     }
+
 }

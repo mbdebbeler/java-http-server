@@ -4,37 +4,36 @@ import HTTPComponents.StatusCode;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ResponseBuilder {
-
-    private Response response;
-
-    public ResponseBuilder() {
-        response = new Response(StatusCode.OK);
-    }
+    public StatusCode statusCode;
+    public byte[] body;
+    public HashMap<String, String> headers = new HashMap<>();
 
     public Response build() {
-        return response;
+        return new Response(this);
     }
 
     public ResponseBuilder addStatusCode(StatusCode statusCode) {
-        this.response.statusCode = statusCode;
+        this.statusCode = statusCode;
         return this;
     }
 
-    public ResponseBuilder addAllowedMethods(ArrayList<String> allowedMethods) {
-        this.response.allowedMethods = allowedMethods;
+    public ResponseBuilder addBody(byte[] body) {
+        this.body = body;
         return this;
     }
 
-    public ResponseBuilder addBody(String body) {
-        this.response.body = body;
+    public ResponseBuilder addHeader(String header, String value) {
+        this.headers.put(header, value);
         return this;
     }
-
 
     public ResponseBuilder addTextBodyFromFile(String filename) {
         String data = null;
@@ -49,49 +48,26 @@ public class ResponseBuilder {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.response.body = data;
+        this.body = data.getBytes();
         return this;
     }
 
 
     public ResponseBuilder addImageBodyFromFile(String filename) {
-        String encodedFile;
+        byte[] fileContents;
         try {
             URL fileLocation = Server.class.getResource(filename);
-            File fileToRead = new File(fileLocation.getPath());
-            encodedFile = encodeFileToBase64Binary(fileToRead);
-
+            fileContents = Files.readAllBytes(Paths.get(fileLocation.getPath()));
         } catch (Exception e) {
             e.printStackTrace();
             return this;
         }
-        this.response.body = encodedFile;
-        return this;
-    }
-
-
-    private static String encodeFileToBase64Binary(File file){
-        String encodedFile = null;
-        try {
-            FileInputStream fileInputStreamReader = new FileInputStream(file);
-            byte[] bytes = new byte[(int)file.length()];
-            fileInputStreamReader.read(bytes);
-            encodedFile = Base64.getEncoder().encodeToString(bytes);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return encodedFile;
-    }
-
-    public ResponseBuilder addHeaders(String string) {
-        this.response.headers = string;
+        this.body = fileContents;
         return this;
     }
 
     public ResponseBuilder addRedirect(String redirectedLocation) {
-        addHeaders("Location: " + redirectedLocation);
+        this.addHeader("Location", redirectedLocation);
         return this;
     }
 

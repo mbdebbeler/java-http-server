@@ -4,18 +4,21 @@ import HTTPComponents.Method;
 import HTTPComponents.StatusCode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OptionsRequestHandler implements RequestHandler {
-    ArrayList<Route> routes;
-
+    private ArrayList<Route> routes;
+    private String key;
+    private String value;
 
     public OptionsRequestHandler(ArrayList<Route> routes){
         this.routes = routes;
     };
 
     public Response handle(Request request) {
-        ArrayList<String> allowedMethods = buildAllowedMethods(request);
-        return new ResponseBuilder().addAllowedMethods(allowedMethods).addStatusCode(StatusCode.OK).build();
+        key = "Allow";
+        value = encodeAsString(buildAllowedMethods(request));
+        return new ResponseBuilder().addHeader(key, value).addStatusCode(StatusCode.OK).build();
     }
 
     private ArrayList<String> buildAllowedMethods(Request request) {
@@ -32,5 +35,9 @@ public class OptionsRequestHandler implements RequestHandler {
             allowedMethods.add(Method.OPTIONS.name());
         }
         return allowedMethods;
+    }
+
+    private String encodeAsString(ArrayList<String> allowedMethods) {
+        return String.join(", ", allowedMethods);
     }
 }

@@ -4,56 +4,51 @@ import HTTPComponents.StatusCode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static HTTPComponents.StatusLineComponents.CRLF;
-import static HTTPComponents.StatusLineComponents.NEWLINE;
 
 public class ResponseTest {
 
     @Test
-    public void getStatusCodeReturnsACode() {
-        Response testResponse = new Response(StatusCode.BAD_REQUEST);
-        StatusCode actual = testResponse.getStatusCode();
-        StatusCode expected = StatusCode.BAD_REQUEST;
-        Assert.assertEquals(expected, actual);
+    public void responseAddsAStatusCode() {
+        Response testResponse = new ResponseBuilder()
+                .addStatusCode(StatusCode.OK)
+                .build();
+        StatusCode actualStatusCode = testResponse.getStatusCode();
+        StatusCode expectedStatusCode = StatusCode.OK;
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
     }
 
     @Test
-    public void getStatusLineReturnsProperlyEncodedOKResponse() {
-        Response testResponse = new Response(StatusCode.OK);
-        String actual = testResponse.getStatusLine();
-        String expected = "HTTP/1.1 200 OK" + CRLF;
-        Assert.assertEquals(expected, actual);
+    public void addsAnEmptyBody() {
+        Response testResponse = new ResponseBuilder()
+                .addStatusCode(StatusCode.OK)
+                .build();
+        String actualBody = new String(testResponse.getBody());
+        String expectedBody = new String("".getBytes());
+        Assert.assertEquals(expectedBody, actualBody);
     }
 
     @Test
-    public void getStatusLineReturnsProperlyEncodedBadRequestResponse() {
-        Response testResponse = new Response(StatusCode.BAD_REQUEST);
-        String actual = testResponse.getStatusLine();
-        String expected = "HTTP/1.1 400 Bad Request" + CRLF;
-        Assert.assertEquals(expected, actual);
+    public void addsABody() {
+        Response testResponse = new ResponseBuilder()
+                .addStatusCode(StatusCode.OK)
+                .addBody("test body".getBytes())
+                .build();
+        String actualBody = new String(testResponse.getBody());
+        String expectedBody = "test body";
+        Assert.assertEquals(expectedBody, actualBody);
     }
+
+
 
     @Test
-    public void getEntireResponseDoesNotEncodeASecondLineWhenThereIsNotOne() {
-        Response testResponse = new Response(StatusCode.OK);
-        String actual = testResponse.getEntireResponse();
-        String expected = "HTTP/1.1 200 OK" + CRLF;
-        Assert.assertEquals(expected, actual);
+    public void addsHeaders() {
+        Response testResponse = new ResponseBuilder()
+                .addStatusCode(StatusCode.OK)
+                .addHeader("Allow", "GET")
+                .addBody("test body".getBytes())
+                .build();
+        String actualResponse = new String(testResponse.getResponseBytes());
+        String expectedResponse = "HTTP/1.1 200 OK\r\nAllow: GET\r\n\r\ntest body";
+        Assert.assertEquals(expectedResponse, actualResponse);
     }
-
-    @Test
-    public void getEntireResponseReturnsBodyWhenRequestHasBody() {
-        Response testResponse = new Response(StatusCode.OK,"Where is the body?");
-        String actual = testResponse.getEntireResponse();
-        String expected = "HTTP/1.1 200 OK"
-                + NEWLINE
-                + "Content-Length: 18"
-                + NEWLINE
-                + "Content-Type: text/html"
-                + CRLF
-                + CRLF
-                + "Where is the body?";
-        Assert.assertEquals(expected, actual);
-    }
-
 }
