@@ -1,13 +1,14 @@
 package server;
 
 public class MockSocketWrapper implements ISocket {
-    public static byte[] sentData;
+    private static byte[] sentData;
     private String testMessage;
     public static boolean closeWasCalled = false;
 
-    public MockSocketWrapper(){
+    public MockSocketWrapper() {
         this.testMessage = "test message";
-    };
+    }
+    ;
 
     public MockSocketWrapper(String testMessage) {
         this.testMessage = testMessage;
@@ -23,6 +24,10 @@ public class MockSocketWrapper implements ISocket {
 
     public String getSentDataAsString() {
         return new String(sentData);
+    }
+
+    public byte[] getSentData() {
+        return sentData;
     }
 
     public void close() {

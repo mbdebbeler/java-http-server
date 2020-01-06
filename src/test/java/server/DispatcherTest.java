@@ -49,8 +49,8 @@ public class DispatcherTest {
     @Test
     public void aServerSocketSendsData() {
         String message = mockSocketWrapper.receive();
-        mockSocketWrapper.send(message);
-        Assert.assertEquals(mockSocketWrapper.getSentData(), "test message");
+        mockSocketWrapper.send(message.getBytes());
+        Assert.assertEquals(mockSocketWrapper.getSentDataAsString(), "test message");
     }
 
     @Test
