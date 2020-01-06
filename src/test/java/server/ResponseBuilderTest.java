@@ -45,7 +45,14 @@ public class ResponseBuilderTest {
         Request request = new Request(incomingRequest);
 
         String actualResponse = new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(request.getBody()).build().getEntireResponse();
-        String expectedResponse = "HTTP/1.1 200 OK" + CRLF + CRLF + "some body that could be anything";
+        String expectedResponse = "HTTP/1.1 200 OK"
+                + NEWLINE
+                + "Content-Length: 32"
+                + NEWLINE
+                + "Content-Type: text/html"
+                + CRLF
+                + CRLF
+                + "some body that could be anything";
 
         Assert.assertEquals(expectedResponse, actualResponse);
     }
