@@ -28,9 +28,16 @@ public class ConnectionHandlerTest {
             ResponseBuilder responseBuilder = new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(body);
             return responseBuilder.build();
         });
+        Route route4 = new Route(Method.GET, "/test_redirect", (request) -> {
+            return new ResponseBuilder()
+                    .addRedirect("http://127.0.0.1:5000/test_simple_get")
+                    .addStatusCode(StatusCode.MOVED_PERMANENTLY)
+                    .build();
+        });
         routes.add(route1);
         routes.add(route2);
         routes.add(route3);
+        routes.add(route4);
         mockRouter = new Router(routes);
     }
 
@@ -93,8 +100,37 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF + CRLF + "Where is the body?";
+        String expectedSentMessage = "HTTP/1.1 200 OK"
+                + NEWLINE
+                + "Content-Length: 18"
+                + NEWLINE
+                + "Content-Type: text/html"
+                + CRLF
+                + CRLF
+                + "Where is the body?";
 
+        String actualSentMessage = mockSocketWrapper.getSentData();
+        Boolean expectedIsClosed = true;
+        Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
+
+        Assert.assertEquals(expectedSentMessage, actualSentMessage);
+        Assert.assertEquals(expectedIsClosed, actualIsClosed);
+    }
+
+    @Test
+    public void itRedirectsRequestsAndIncludesNewLocationInHeader() {
+        String testRequest = "GET /test_redirect HTTP/1.1" + NEWLINE +
+                "Content-Length: 21" + NEWLINE +
+                "Content-Type: application/x-www-form-urlencoded" + NEWLINE +
+                CRLF;
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
+        ServerLogger mockServerLogger = new ServerLogger();
+        ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
+        connectionHandler.run();
+        String expectedSentMessage = "HTTP/1.1 301 Moved Permanently"
+                + NEWLINE
+                + "Location: http://127.0.0.1:5000/test_simple_get"
+                + CRLF;
         String actualSentMessage = mockSocketWrapper.getSentData();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
