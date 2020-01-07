@@ -2,6 +2,7 @@ package server;
 
 import HTTPComponents.Method;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,7 +26,11 @@ public class Request {
     }
 
     public String getPath() {
-        return message.split(" ")[1];
+        String fullPath = message.split(" ")[1];
+        System.out.println(fullPath);
+        System.out.println(fullPath.split("/")[0]);
+        System.out.println(fullPath.split("/")[1]);
+        return fullPath.split("/")[0];
     }
 
     public String getVersion() {
@@ -63,4 +68,7 @@ public class Request {
         return splitHeaders;
     }
 
+    public String getId() {
+        return getPath().split("/")[2];
+    }
 }

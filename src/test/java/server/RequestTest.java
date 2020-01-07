@@ -82,6 +82,15 @@ public class RequestTest {
         Assert.assertEquals(expectedHeaders, actualHeaders);
     }
 
+    @Test
+    public void canParseIdFromAPathWhenThereASecondSlash() {
+        String message = "GET /the_path/the_id HTTP/1.1\n";
+        Request request = new Request(message);
+        String expectedId = "the_id";
+        String actualId = request.getId();
+
+        Assert.assertEquals(expectedId, actualId);
+    }
 
 
 }

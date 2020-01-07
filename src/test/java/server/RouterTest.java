@@ -38,10 +38,16 @@ public class RouterTest {
                     .addStatusCode(StatusCode.MOVED_PERMANENTLY)
                     .build();
         });
+        Route route5 = new Route(Method.DELETE, "/images", (request) -> {
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.NO_CONTENT)
+                    .build();
+        });
         routes.add(route1);
         routes.add(route2);
         routes.add(route3);
         routes.add(route4);
+        routes.add(route5);
     }
 
     @Test
@@ -144,7 +150,23 @@ public class RouterTest {
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
+    }
+
+    @Test
+    public void deletesAResourceInADirectory() {
+        Request testRequest = new Request("DELETE /images/delete_test.jpg HTTP/1.1");
+        Router testRouter = new Router(routes);
+        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
+        String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
+        String actualResponse = new String(testRouter.route(testRequest).getResponseBytes());
+        StatusCode expectedStatusCode = StatusCode.NO_CONTENT;
+        String expectedStatusLine = "HTTP/1.1 204 No Content" + CRLF;
+        String expectedResponse = "HTTP/1.1 204 No Content" + CRLF ;
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponse, actualResponse);
+
     }
 
 }
