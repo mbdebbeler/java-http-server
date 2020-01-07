@@ -47,7 +47,7 @@ public class ServerLogger {
         fileHandler.close();
     }
 
-    private static void makeFile(String fileName) {
+    private void makeFile(String fileName) {
         File logFile = new File(fileName);
         if (!logFile.exists()) {
             try {

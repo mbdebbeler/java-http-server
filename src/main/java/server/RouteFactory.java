@@ -9,36 +9,12 @@ public class RouteFactory implements IRouteFactory {
 
     public ArrayList<Route> makeRoutes() {
         return new ArrayList<Route>() {{
-            add(new Route(Method.GET, "/simple_get", (request) -> {
-                return new ResponseBuilder()
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
-            add(new Route(Method.HEAD, "/get_with_body", (request) -> {
-                return new ResponseBuilder()
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
-            add(new Route(Method.GET, "/method_options", (request) -> {
-                return new ResponseBuilder()
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
-            add(new Route(Method.GET, "/method_options2", (request) -> {
-                return new ResponseBuilder()
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
-            add(new Route(Method.PUT, "/method_options2", (request) -> {
-                return new ResponseBuilder()
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
-            add(new Route(Method.POST, "/method_options2", (request) -> {
-                return new ResponseBuilder()
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
+            add(new Route(Method.GET, "/simple_get", new DefaultRequestHandler()));
+            add(new Route(Method.HEAD, "/get_with_body", new DefaultRequestHandler()));
+            add(new Route(Method.GET, "/method_options",  new DefaultRequestHandler()));
+            add(new Route(Method.GET, "/method_options2",  new DefaultRequestHandler()));
+            add(new Route(Method.PUT, "/method_options2",  new DefaultRequestHandler()));
+            add(new Route(Method.POST, "/method_options2",  new DefaultRequestHandler()));
             add(new Route(Method.POST, "/echo_body", (request) -> {
                 return new ResponseBuilder()
                         .setStatusCode(StatusCode.OK)
@@ -70,14 +46,8 @@ public class RouteFactory implements IRouteFactory {
                         .setStatusCode(StatusCode.OK)
                         .build();
             }));
-            add(new Route(Method.GET, "/images", (request) -> {
-                return new ResponseBuilder()
-                        .addHeader("Content-Type", "image/jpg")
-                        .setImageBodyFromFile("../big-test.jpg")
-                        .setStatusCode(StatusCode.OK)
-                        .build();
-            }));
-
+            add(new Route(Method.GET, "/images", new GetResourceHandler()));
+            add(new Route(Method.DELETE, "/images", new DeleteRequestHandler()));
         }};
     }
 }
