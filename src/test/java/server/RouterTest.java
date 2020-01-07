@@ -18,29 +18,29 @@ public class RouterTest {
         routes = new ArrayList<Route>();
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.OK)
+                    .setStatusCode(StatusCode.OK)
                     .build();
         });
         Route route2 = new Route(Method.HEAD, "/test_route2", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.OK)
+                    .setStatusCode(StatusCode.OK)
                     .build();
         });
         Route route3 = new Route(Method.POST, "/test_route3", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.OK)
-                    .addBody(request.getBody())
+                    .setStatusCode(StatusCode.OK)
+                    .setBody(request.getBody())
                     .build();
         });
         Route route4 = new Route(Method.GET, "/test_redirect_route", (request) -> {
             return new ResponseBuilder()
                     .addRedirect("http://127.0.0.1:5000/simple_get")
-                    .addStatusCode(StatusCode.MOVED_PERMANENTLY)
+                    .setStatusCode(StatusCode.MOVED_PERMANENTLY)
                     .build();
         });
         Route route5 = new Route(Method.DELETE, "/images", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.NO_CONTENT)
+                    .setStatusCode(StatusCode.NO_CONTENT)
                     .build();
         });
         routes.add(route1);
@@ -52,7 +52,7 @@ public class RouterTest {
 
     @Test
     public void returnsNotFoundWhenPathDoesNotExist() {
-        Request testRequest = new Request("GET /not_found_resource");
+        Request testRequest = new RequestBuilder("GET /not_found_resource HTTP/1.1").build();
         Router testRouter = new Router(routes);
         StatusCode actual = testRouter.route(testRequest).getStatusCode();
         StatusCode expected = StatusCode.NOT_FOUND;
@@ -62,7 +62,7 @@ public class RouterTest {
 
     @Test
     public void doesNotReturnNotFoundWhenPathDoesExist() {
-        Request testRequest = new Request("GET /test_route");
+        Request testRequest = new RequestBuilder("GET /test_route HTTP/1.1").build();
         Router testRouter = new Router(routes);
         StatusCode actual = testRouter.route(testRequest).getStatusCode();
         StatusCode expected = StatusCode.OK;
@@ -72,7 +72,7 @@ public class RouterTest {
 
     @Test
     public void returnsOKAndAllowedMethodsForAnOptionsRequestWhenPathExists() {
-        Request testRequest = new Request("OPTIONS /test_route");
+        Request testRequest = new RequestBuilder("OPTIONS /test_route HTTP/1.1").build();
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
@@ -88,7 +88,7 @@ public class RouterTest {
 
     @Test
     public void returnsNotFoundForAnOptionsRequestWhenPathDoesNotExist() {
-        Request testRequest = new Request("OPTIONS /not_found_resources");
+        Request testRequest = new RequestBuilder("OPTIONS /not_found_resources HTTP/1.1").build();
         Router testRouter = new Router(routes);
 
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
@@ -103,7 +103,7 @@ public class RouterTest {
 
     @Test
     public void returnsNotAllowedForARequestWhenPathExistsButMethodDoesNot() {
-        Request testRequest = new Request("GET /test_route2");
+        Request testRequest = new RequestBuilder("GET /test_route2 HTTP/1.1").build();
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
@@ -119,7 +119,7 @@ public class RouterTest {
 
     @Test
     public void returnsAResponseWithBodyToAPOSTRequestWithBody() {
-        Request testRequest = new Request("POST /test_route3 HTTP/1.1" + CRLF + CRLF + "Where is the body?");
+        Request testRequest = new RequestBuilder("POST /test_route3 HTTP/1.1" + CRLF + CRLF + "Where is the body?").build();
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
@@ -139,7 +139,7 @@ public class RouterTest {
 
     @Test
     public void redirectsAnInvalidPathRequest() {
-        Request testRequest = new Request("GET /test_redirect_route HTTP/1.1");
+        Request testRequest = new RequestBuilder("GET /test_redirect_route HTTP/1.1").build();
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
@@ -154,14 +154,14 @@ public class RouterTest {
 
     @Test
     public void deletesAResourceInADirectory() {
-        Request testRequest = new Request("DELETE /images/delete_test.jpg HTTP/1.1");
+        Request testRequest = new RequestBuilder("DELETE /images/delete_test.jpg HTTP/1.1").build();
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
         String actualResponse = new String(testRouter.route(testRequest).getResponseBytes());
         StatusCode expectedStatusCode = StatusCode.NO_CONTENT;
         String expectedStatusLine = "HTTP/1.1 204 No Content" + CRLF;
-        String expectedResponse = "HTTP/1.1 204 No Content" + CRLF ;
+        String expectedResponse = "HTTP/1.1 204 No Content" + CRLF + CRLF;
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);

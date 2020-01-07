@@ -6,6 +6,6 @@ public class HeadRequestHandler implements RequestHandler {
 
     @Override
     public Response handle(Request request) {
-        return new ResponseBuilder().addStatusCode(StatusCode.OK).build();
+        return new ResponseBuilder().setStatusCode(StatusCode.OK).build();
     }
 }

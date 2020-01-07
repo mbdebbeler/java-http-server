@@ -18,7 +18,7 @@ public class ConnectionHandler implements Runnable {
         try {
             String message = socket.receive();
             if (message != null) {
-                Request request = new Request(message);
+                Request request = new RequestBuilder(message).build();
                 Response response = this.router.route(request);
                 String statusLineAsString = response.getStatusLine().toString();
                 serverLogger.logSomething(INFO, statusLineAsString.trim());

@@ -19,24 +19,24 @@ public class ConnectionHandlerTest {
         ArrayList<Route> routes = new ArrayList<Route>();
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.OK)
+                    .setStatusCode(StatusCode.OK)
                     .build();
         });
         Route route2 = new Route(Method.GET, "/test_route_with_body", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.OK)
+                    .setStatusCode(StatusCode.OK)
                     .build();
         });
         Route route3 = new Route(Method.POST, "/echo_body", (request) -> {
             return new ResponseBuilder()
-                    .addStatusCode(StatusCode.OK)
-                    .addBody(request.getBody())
+                    .setStatusCode(StatusCode.OK)
+                    .setBody(request.getBody())
                     .build();
         });
         Route route4 = new Route(Method.GET, "/test_redirect", (request) -> {
             return new ResponseBuilder()
                     .addRedirect("http://127.0.0.1:5000/test_simple_get")
-                    .addStatusCode(StatusCode.MOVED_PERMANENTLY)
+                    .setStatusCode(StatusCode.MOVED_PERMANENTLY)
                     .build();
         });
         routes.add(route1);
@@ -48,7 +48,7 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itSendsAGoodResponseWhenItGetsAGoodMessage() {
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /test_route");
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /test_route HTTP/1.1");
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
@@ -62,7 +62,7 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itSendsANotFoundResponseWhenItGetsARequestToARouteThatDoesNotExist() {
-        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /not_found_resource");
+        MockSocketWrapper mockSocketWrapper = new MockSocketWrapper("GET /not_found_resource HTTP/1.1");
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();

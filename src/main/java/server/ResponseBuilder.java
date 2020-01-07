@@ -20,12 +20,12 @@ public class ResponseBuilder {
         return new Response(this);
     }
 
-    public ResponseBuilder addStatusCode(StatusCode statusCode) {
+    public ResponseBuilder setStatusCode(StatusCode statusCode) {
         this.statusCode = statusCode;
         return this;
     }
 
-    public ResponseBuilder addBody(byte[] body) {
+    public ResponseBuilder setBody(byte[] body) {
         this.body = body;
         return this;
     }
@@ -35,7 +35,7 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder addTextBodyFromFile(String filename) {
+    public ResponseBuilder setTextBodyFromFile(String filename) {
         String data = null;
         try {
             URL fileLocation = Server.class.getResource(filename);
@@ -53,7 +53,7 @@ public class ResponseBuilder {
     }
 
 
-    public ResponseBuilder addImageBodyFromFile(String filename) {
+    public ResponseBuilder setImageBodyFromFile(String filename) {
         byte[] fileContents;
         try {
             URL fileLocation = Server.class.getResource(filename);
