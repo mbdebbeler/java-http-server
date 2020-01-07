@@ -63,6 +63,20 @@ public class RouteFactory implements IRouteFactory {
                         .addStatusCode(StatusCode.OK)
                         .build();
             }));
+            add(new Route(Method.GET, "/image_get", (request) -> {
+                return new ResponseBuilder()
+                        .addHeader("Content-Type", "image/jpg")
+                        .addImageBodyFromFile("../big-test.jpg")
+                        .addStatusCode(StatusCode.OK)
+                        .build();
+            }));
+            add(new Route(Method.GET, "/images", (request) -> {
+                return new ResponseBuilder()
+                        .addHeader("Content-Type", "image/jpg")
+                        .addImageBodyFromFile("../big-test.jpg")
+                        .addStatusCode(StatusCode.OK)
+                        .build();
+            }));
 
         }};
     }
