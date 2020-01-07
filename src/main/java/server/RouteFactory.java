@@ -10,22 +10,34 @@ public class RouteFactory implements IRouteFactory {
     public ArrayList<Route> makeRoutes() {
         return new ArrayList<Route>() {{
             add(new Route(Method.GET, "/simple_get", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .build();
             }));
             add(new Route(Method.HEAD, "/get_with_body", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .build();
             }));
             add(new Route(Method.GET, "/method_options", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .build();
             }));
             add(new Route(Method.GET, "/method_options2", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .build();
             }));
             add(new Route(Method.PUT, "/method_options2", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .build();
             }));
             add(new Route(Method.POST, "/method_options2", (request) -> {
-                return new ResponseBuilder().build();
+                return new ResponseBuilder()
+                        .addStatusCode(StatusCode.OK)
+                        .build();
             }));
             add(new Route(Method.POST, "/echo_body", (request) -> {
                 return new ResponseBuilder()
@@ -35,7 +47,7 @@ public class RouteFactory implements IRouteFactory {
             }));
             add(new Route(Method.GET, "/redirect", (request) -> {
                 return new ResponseBuilder()
-                        .addRedirect("http://0.0.0.0:5000/simple_get")
+                        .addRedirect("http://127.0.0.1:5000/simple_get")
                         .addStatusCode(StatusCode.MOVED_PERMANENTLY)
                         .build();
             }));
@@ -47,7 +59,7 @@ public class RouteFactory implements IRouteFactory {
             }));
             add(new Route(Method.GET, "/echo_image_contents", (request) -> {
                 return new ResponseBuilder()
-                        .addImageBodyFromFile("../small-test.jpeg")
+                        .addImageBodyFromFile("../big-test.jpg")
                         .addStatusCode(StatusCode.OK)
                         .build();
             }));

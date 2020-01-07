@@ -14,7 +14,8 @@ public class NotAllowedHandler implements RequestHandler {
 
     public Response handle(Request request) {
         ArrayList<String> allowedMethods = buildAllowedMethods(request);
-        return new ResponseBuilder().addAllowedMethods(allowedMethods).addStatusCode(StatusCode.NOT_ALLOWED).build();
+        String allowedMethodsAsString = String.join(", ", allowedMethods);
+        return new ResponseBuilder().addHeader("Allow", allowedMethodsAsString).addStatusCode(StatusCode.NOT_ALLOWED).build();
     }
 
     private ArrayList<String> buildAllowedMethods(Request request) {

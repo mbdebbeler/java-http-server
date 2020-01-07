@@ -3,8 +3,6 @@ package server;
 import HTTPComponents.Method;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Collections;
 import java.util.Map;
 
 import static HTTPComponents.Method.GET;
@@ -58,7 +56,7 @@ public class RequestTest {
     @Test
     public void getBodyReturnsABodyWhenThereIsABody() {
         Request testRequest = new Request(GET + "/test_path" + VERSION + CRLF + CRLF + "Where is the body?");
-        String actual = testRequest.getBody();
+        String actual = new String(testRequest.getBody());
         String expected = "Where is the body?";
         Assert.assertEquals(expected, actual);
     }

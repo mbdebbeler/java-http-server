@@ -20,9 +20,9 @@ public class ConnectionHandler implements Runnable {
             if (message != null) {
                 Request request = new Request(message);
                 Response response = this.router.route(request);
-                String responseAsString = response.getEntireResponse();
-                serverLogger.logSomething(INFO, responseAsString.trim());
-                socket.send(responseAsString);
+                String statusLineAsString = response.getStatusLine().toString();
+                serverLogger.logSomething(INFO, statusLineAsString.trim());
+                socket.send(response.getResponseBytes());
             }
         } catch (Exception e) {
             serverLogger.logSomething(FINE, e.getMessage());

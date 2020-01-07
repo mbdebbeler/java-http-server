@@ -18,15 +18,20 @@ public class ConnectionHandlerTest {
     public void initializeTestRouterWithRoutes() {
         ArrayList<Route> routes = new ArrayList<Route>();
         Route route1 = new Route(Method.GET, "/test_route", (request) -> {
-            return new ResponseBuilder().build();
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.OK)
+                    .build();
         });
         Route route2 = new Route(Method.GET, "/test_route_with_body", (request) -> {
-            return new ResponseBuilder().build();
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.OK)
+                    .build();
         });
         Route route3 = new Route(Method.POST, "/echo_body", (request) -> {
-            String body = request.getBody();
-            ResponseBuilder responseBuilder = new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(body);
-            return responseBuilder.build();
+            return new ResponseBuilder()
+                    .addStatusCode(StatusCode.OK)
+                    .addBody(request.getBody())
+                    .build();
         });
         Route route4 = new Route(Method.GET, "/test_redirect", (request) -> {
             return new ResponseBuilder()
@@ -47,8 +52,8 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF;
-        String actualSentMessage = mockSocketWrapper.getSentData();
+        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF + CRLF;
+        String actualSentMessage = mockSocketWrapper.getSentDataAsString();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
         Assert.assertEquals(expectedSentMessage, actualSentMessage);
@@ -61,8 +66,8 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 404 Not Found" + CRLF;
-        String actualSentMessage = mockSocketWrapper.getSentData();
+        String expectedSentMessage = "HTTP/1.1 404 Not Found" + CRLF + CRLF;
+        String actualSentMessage = mockSocketWrapper.getSentDataAsString();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
         Assert.assertEquals(expectedSentMessage, actualSentMessage);
@@ -80,9 +85,9 @@ public class ConnectionHandlerTest {
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
-        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF;
+        String expectedSentMessage = "HTTP/1.1 200 OK" + CRLF + CRLF;
 
-        String actualSentMessage = mockSocketWrapper.getSentData();
+        String actualSentMessage = mockSocketWrapper.getSentDataAsString();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
         Assert.assertEquals(expectedSentMessage, actualSentMessage);
@@ -101,15 +106,11 @@ public class ConnectionHandlerTest {
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
         String expectedSentMessage = "HTTP/1.1 200 OK"
-                + NEWLINE
-                + "Content-Length: 18"
-                + NEWLINE
-                + "Content-Type: text/html"
                 + CRLF
                 + CRLF
                 + "Where is the body?";
 
-        String actualSentMessage = mockSocketWrapper.getSentData();
+        String actualSentMessage = mockSocketWrapper.getSentDataAsString();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
 
@@ -128,19 +129,16 @@ public class ConnectionHandlerTest {
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
         String expectedSentMessage = "HTTP/1.1 301 Moved Permanently"
-                + NEWLINE
+                + CRLF
                 + "Location: http://127.0.0.1:5000/test_simple_get"
+                + CRLF
                 + CRLF;
-        String actualSentMessage = mockSocketWrapper.getSentData();
+        String actualSentMessage = mockSocketWrapper.getSentDataAsString();
         Boolean expectedIsClosed = true;
         Boolean actualIsClosed = mockSocketWrapper.getCloseWasCalled();
 
         Assert.assertEquals(expectedSentMessage, actualSentMessage);
         Assert.assertEquals(expectedIsClosed, actualIsClosed);
     }
-
-
-
-
 
 }

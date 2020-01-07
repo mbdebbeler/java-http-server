@@ -1,22 +1,19 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 import static java.util.logging.Level.FINE;
 
 public class SocketWrapper implements ISocket {
     private BufferedReader input;
-    private PrintWriter output;
+    private DataOutputStream output;
 
     public SocketWrapper(Socket socket) {
         try {
             this.input = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
-            this.output = new PrintWriter(socket.getOutputStream(), true);
+            this.output = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,12 +34,17 @@ public class SocketWrapper implements ISocket {
         }
     }
 
-    public void send(String data) {
-        output.print(data);
+    public void send(byte[] data) {
+        try {
+            output.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void close() {
         try {
+            output.flush();
             output.close();
             input.close();
         } catch (IOException e) {
