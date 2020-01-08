@@ -5,10 +5,9 @@ import HTTPComponents.StatusCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
-
 import java.util.ArrayList;
 
-import static HTTPComponents.StatusLineComponents.CRLF;
+import static HTTPComponents.StatusLineComponents.*;
 
 public class RouterTest {
     private ArrayList<Route> routes;
@@ -16,34 +15,23 @@ public class RouterTest {
     @Before
     public void initializeTestRoutes() {
         routes = new ArrayList<Route>();
-        Route route1 = new Route(Method.GET, "/test_route", (request) -> {
-            return new ResponseBuilder()
-                    .setStatusCode(StatusCode.OK)
-                    .build();
-        });
-        Route route2 = new Route(Method.HEAD, "/test_route2", (request) -> {
-            return new ResponseBuilder()
-                    .setStatusCode(StatusCode.OK)
-                    .build();
-        });
-        Route route3 = new Route(Method.POST, "/test_route3", (request) -> {
-            return new ResponseBuilder()
-                    .setStatusCode(StatusCode.OK)
-                    .setBody(request.getBody())
-                    .build();
-        });
+        Route route1 = new Route(Method.GET, "/test_route", new DefaultRequestHandler());
+        Route route2 = new Route(Method.HEAD, "/test_route2", new DefaultRequestHandler());
+        Route route3 = new Route(Method.POST, "/test_route3", new PostRequestHandler());
         Route route4 = new Route(Method.GET, "/test_redirect_route", (request) -> {
             return new ResponseBuilder()
                     .addRedirect("http://127.0.0.1:5000/simple_get")
                     .setStatusCode(StatusCode.MOVED_PERMANENTLY)
                     .build();
         });
-        Route route5 = new Route(Method.DELETE, "/test_images", new DeleteRequestHandler());
+        Route route5 = new Route(Method.DELETE, "/test_images", new MockDeleteRequestHandler());
+        Route route6 = new Route(Method.POST, "/test_images", new PostRequestHandler());
         routes.add(route1);
         routes.add(route2);
         routes.add(route3);
         routes.add(route4);
         routes.add(route5);
+        routes.add(route6);
     }
 
     @Test
@@ -115,7 +103,7 @@ public class RouterTest {
 
     @Test
     public void returnsAResponseWithBodyToAPOSTRequestWithBody() {
-        Request testRequest = new RequestBuilder("POST /test_route3 HTTP/1.1" + CRLF + CRLF + "Where is the body?").build();
+        Request testRequest = new RequestBuilder("POST /test_route3/1 HTTP/1.1" + CRLF + CRLF + "Where is the body?").build();
         Router testRouter = new Router(routes);
         StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
         String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
@@ -150,20 +138,38 @@ public class RouterTest {
     }
 
     @Test
-    public void deletesAResourceInADirectory() {
-        Request testRequest = new RequestBuilder("DELETE /test_images/delete_test.jpg HTTP/1.1").build();
+    public void postsAResourceInADirectory() {
+        String imageBody = new String(new MockResourceHandler().read("test-image.jpg"));
+        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post_test.txt" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
         Router testRouter = new Router(routes);
-        StatusCode actualStatusCode = testRouter.route(testRequest).getStatusCode();
-//        String actualStatusLine = new String(testRouter.route(testRequest).getStatusLine());
-//        String actualResponse = new String(testRouter.route(testRequest).getResponseBytes());
+        Response testResponse = testRouter.route(testRequest);
+        StatusCode actualStatusCode = testResponse.getStatusCode();
+        String actualStatusLine = new String(testResponse.getStatusLine());
+        String actualResponse = new String(testResponse.getResponseBytes());
+        StatusCode expectedStatusCode = StatusCode.OK;
+        String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
+        String expectedResponse = "HTTP/1.1 200 OK" + CRLF + CRLF + imageBody;
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponse, actualResponse);
+    }
+
+    @Test
+    public void deletesAResourceInADirectory() {
+        Request testRequest = new RequestBuilder("DELETE /test_images/delete-test.jpg HTTP/1.1").build();
+        Router testRouter = new Router(routes);
+        Response testResponse = testRouter.route(testRequest);
+        StatusCode actualStatusCode = testResponse.getStatusCode();
+        String actualStatusLine = new String(testResponse.getStatusLine());
+        String actualResponse = new String(testResponse.getResponseBytes());
         StatusCode expectedStatusCode = StatusCode.NO_CONTENT;
         String expectedStatusLine = "HTTP/1.1 204 No Content" + CRLF;
         String expectedResponse = "HTTP/1.1 204 No Content" + CRLF + CRLF;
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
-//        Assert.assertEquals(expectedStatusLine, actualStatusLine);
-//        Assert.assertEquals(expectedResponse, actualResponse);
-
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponse, actualResponse);
     }
 
 }

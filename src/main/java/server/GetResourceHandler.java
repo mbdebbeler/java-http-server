@@ -25,13 +25,7 @@ public class GetResourceHandler implements RequestHandler {
     }
 
     public byte[] fetchResource(String resourceIdentifier) {
-        Path fullPath = Paths.get(new File("src/main/resources/" + resourceIdentifier).getAbsolutePath());
-        try {
-            return Files.readAllBytes(fullPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "".getBytes();
+        return new FileResourceHandler().read(resourceIdentifier);
     }
 }
 
