@@ -2,16 +2,10 @@ package server;
 
 import HTTPComponents.StatusCode;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class GetResourceHandler implements RequestHandler {
 
     public Response handle(Request request) {
-        if (fetchResource(request.getResourceIdentifier()) != "".getBytes()) {
+        if (request.getResourceIdentifier() != "index.html") {
             return new ResponseBuilder()
                     .setStatusCode(StatusCode.OK)
                     .addHeader("Content-Type", "image/jpg")
@@ -19,13 +13,19 @@ public class GetResourceHandler implements RequestHandler {
                     .build();
         } else {
             return new ResponseBuilder()
-                    .setStatusCode(StatusCode.NOT_FOUND)
+                    .setStatusCode(StatusCode.OK)
+                    .addHeader("Content-Type", "text/html")
+                    .setBody(fetchDirectory())
                     .build();
         }
     }
 
     public byte[] fetchResource(String resourceIdentifier) {
         return new FileResourceHandler().read(resourceIdentifier);
+    }
+
+    public byte[] fetchDirectory() {
+        return new FileResourceHandler().getDelimitedContentsOfDirectory().getBytes();
     }
 }
 

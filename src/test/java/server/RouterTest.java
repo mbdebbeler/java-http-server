@@ -5,6 +5,7 @@ import HTTPComponents.StatusCode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
+
 import java.util.ArrayList;
 
 import static HTTPComponents.StatusLineComponents.*;
@@ -26,12 +27,14 @@ public class RouterTest {
         });
         Route route5 = new Route(Method.DELETE, "/test_images", new MockDeleteRequestHandler());
         Route route6 = new Route(Method.POST, "/test_images", new PostRequestHandler());
+        Route route7 = new Route(Method.GET, "/test_images", new GetResourceHandler());
         routes.add(route1);
         routes.add(route2);
         routes.add(route3);
         routes.add(route4);
         routes.add(route5);
         routes.add(route6);
+        routes.add(route7);
     }
 
     @Test
@@ -140,7 +143,7 @@ public class RouterTest {
     @Test
     public void postsAResourceInADirectory() {
         String imageBody = new String(new MockResourceHandler().read("test-image.jpg"));
-        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post_test.txt" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
+        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post_test.jpg" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
         Router testRouter = new Router(routes);
         Response testResponse = testRouter.route(testRequest);
         StatusCode actualStatusCode = testResponse.getStatusCode();
@@ -166,6 +169,37 @@ public class RouterTest {
         StatusCode expectedStatusCode = StatusCode.NO_CONTENT;
         String expectedStatusLine = "HTTP/1.1 204 No Content" + CRLF;
         String expectedResponse = "HTTP/1.1 204 No Content" + CRLF + CRLF;
+
+        Assert.assertEquals(expectedStatusCode, actualStatusCode);
+        Assert.assertEquals(expectedStatusLine, actualStatusLine);
+        Assert.assertEquals(expectedResponse, actualResponse);
+    }
+
+    @Test
+    public void getsAnIndexWhenThereIsNoResourceIdentifier() {
+        Request testRequest = new RequestBuilder("GET /test_images HTTP/1.1").build();
+        Router testRouter = new Router(routes);
+        Response testResponse = testRouter.route(testRequest);
+        StatusCode actualStatusCode = testResponse.getStatusCode();
+        String actualStatusLine = new String(testResponse.getStatusLine());
+        String actualResponse = new String(testResponse.getResponseBytes());
+        StatusCode expectedStatusCode = StatusCode.OK;
+        String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
+        String expectedResponse = "HTTP/1.1 200 OK"
+                + CRLF + "Content-Type: text/html"
+                + CRLF
+                + CRLF
+                + "<a href=/images/big-test.jpg>big-test.jpg</a>"
+                + CRLF
+                + "<a href=/images/test.html>test.html</a>"
+                + CRLF
+                + "<a href=/images/test.txt>test.txt</a>"
+                + CRLF
+                + "<a href=/images/small-test.jpeg>small-test.jpeg</a>"
+                + CRLF
+                + "<a href=/images/delete_test.jpg>delete_test.jpg</a>"
+                + CRLF
+                + "<a href=/images/post_test.jpg>post_test.jpg</a>";
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);

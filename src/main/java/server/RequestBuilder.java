@@ -88,7 +88,7 @@ public class RequestBuilder {
     public void setResourceIdentifier() {
         String[] splitPath = message.split(" ")[1].split("(?=/)");
         if (splitPath.length == 1) {
-            this.resourceIdentifier = "";
+            this.resourceIdentifier = "index.html";
         } else {
             this.resourceIdentifier = message.split(" ")[1].split("(?=/)")[1].split("/")[1];
         }
