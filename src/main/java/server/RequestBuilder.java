@@ -2,7 +2,6 @@ package server;
 
 import HTTPComponents.Method;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -88,7 +87,7 @@ public class RequestBuilder {
     public void setResourceIdentifier() {
         String[] splitPath = message.split(" ")[1].split("(?=/)");
         if (splitPath.length == 1) {
-            this.resourceIdentifier = "";
+            this.resourceIdentifier = "index.html";
         } else {
             this.resourceIdentifier = message.split(" ")[1].split("(?=/)")[1].split("/")[1];
         }

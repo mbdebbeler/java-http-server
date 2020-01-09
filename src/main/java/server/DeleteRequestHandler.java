@@ -2,8 +2,6 @@ package server;
 
 import HTTPComponents.StatusCode;
 
-import java.io.File;
-
 public class DeleteRequestHandler implements RequestHandler {
 
     public Response handle(Request request) {
@@ -19,9 +17,7 @@ public class DeleteRequestHandler implements RequestHandler {
     }
 
     private boolean delete(String resourceIdentifier) {
-        String fullPath = new File("src/main/resources/" + resourceIdentifier).getAbsolutePath();
-        File resource = new File(fullPath);
-        return resource.delete();
+        return new FileResourceHandler(Config.rootResourcePath).delete(resourceIdentifier);
     }
 
 }
