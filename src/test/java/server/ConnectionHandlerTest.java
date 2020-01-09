@@ -33,12 +33,7 @@ public class ConnectionHandlerTest {
                     .setBody(request.getBody())
                     .build();
         });
-        Route route4 = new Route(Method.GET, "/test_redirect", (request) -> {
-            return new ResponseBuilder()
-                    .addRedirect("http://127.0.0.1:5000/test_simple_get")
-                    .setStatusCode(StatusCode.MOVED_PERMANENTLY)
-                    .build();
-        });
+        Route route4 = new Route(Method.GET, "/test_redirect", new RedirectRequestHandler());
         routes.add(route1);
         routes.add(route2);
         routes.add(route3);
@@ -120,17 +115,14 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itRedirectsRequestsAndIncludesNewLocationInHeader() {
-        String testRequest = "GET /test_redirect HTTP/1.1" + NEWLINE +
-                "Content-Length: 21" + NEWLINE +
-                "Content-Type: application/x-www-form-urlencoded" + NEWLINE +
-                CRLF;
+        String testRequest = "GET /test_redirect HTTP/1.1";
         MockSocketWrapper mockSocketWrapper = new MockSocketWrapper(testRequest);
         ServerLogger mockServerLogger = new ServerLogger();
         ConnectionHandler connectionHandler = new ConnectionHandler(mockSocketWrapper, mockRouter, mockServerLogger);
         connectionHandler.run();
         String expectedSentMessage = "HTTP/1.1 301 Moved Permanently"
                 + CRLF
-                + "Location: http://127.0.0.1:5000/test_simple_get"
+                + "Location: http://127.0.0.1:5000/simple_get"
                 + CRLF
                 + CRLF;
         String actualSentMessage = mockSocketWrapper.getSentDataAsString();

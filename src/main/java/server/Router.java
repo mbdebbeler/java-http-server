@@ -22,7 +22,7 @@ public class Router {
             if (requestMethod.equals(Method.OPTIONS) && route.getPath().equals(requestPath)) {
                 return new OptionsRequestHandler(this.routes).handle(request);
             } else if (requestMethod.equals(Method.HEAD) && route.getPath().equals(requestPath)) {
-                return new HeadRequestHandler().handle(request);
+                return new DefaultRequestHandler().handle(request);
             } else if (route.getMethod().equals(requestMethod) && route.getPath().equals(requestPath)) {
                 return route.getRequestHandler().handle(request);
             }

@@ -56,7 +56,7 @@ public class RequestBuilder {
     }
 
     public void setHeaders() {
-        String headers = message.split(CRLF)[0];
+        String headers = message.split(CRLF+CRLF)[0];
         this.headers = getHeaderKeyValuePairs(splitRequest(headers));
     }
 
