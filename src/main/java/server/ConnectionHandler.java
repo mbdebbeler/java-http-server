@@ -4,11 +4,11 @@ import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.FINE;
 
 public class ConnectionHandler implements Runnable {
-    private ISocket socket;
+    private Socket socket;
     private ServerLogger serverLogger;
     private Router router;
 
-    public ConnectionHandler(ISocket socket, Router router, ServerLogger serverLogger) {
+    public ConnectionHandler(Socket socket, Router router, ServerLogger serverLogger) {
         this.socket = socket;
         this.serverLogger = serverLogger;
         this.router = router;

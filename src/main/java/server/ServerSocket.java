@@ -2,8 +2,8 @@ package server;
 
 import java.io.IOException;
 
-public interface IServerSocket {
+public interface ServerSocket {
     void createAndListen(int portNumber);
-    ISocket acceptConnection() throws IOException;
+    Socket acceptConnection() throws IOException;
     boolean isClosed();
 }

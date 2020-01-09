@@ -6,16 +6,14 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class DispatcherTest {
-    private String[] commandLineArgs = {"6666"};
+public class SocketDispatcherTest {
+    private int portNumber = 6666;
     private MockDispatcher mockDispatcher;
-    private int portNumber;
     private MockServerSocketWrapper mockServerSocketWrapper;
     private MockSocketWrapper mockSocketWrapper;
 
     @Before
     public void setUp() {
-        portNumber = Integer.parseInt(commandLineArgs[0]);
         mockServerSocketWrapper = new MockServerSocketWrapper(portNumber);
         mockDispatcher = new MockDispatcher(mockServerSocketWrapper);
         mockSocketWrapper = new MockSocketWrapper();
@@ -23,7 +21,7 @@ public class DispatcherTest {
 
     @Test
     public void startServerCallsCreateAndListen() throws IOException {
-        mockDispatcher.listenAndDispatch(commandLineArgs, mockServerSocketWrapper);
+        mockDispatcher.listen(portNumber);
         Assert.assertTrue(mockServerSocketWrapper.getIsListening());
     }
 

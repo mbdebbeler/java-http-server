@@ -1,14 +1,12 @@
 package server;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 
-public class ServerSocketWrapper implements IServerSocket {
-    private ServerSocket serverSocket;
+public class ServerSocketWrapper implements ServerSocket {
+    private java.net.ServerSocket serverSocket;
     public ServerLogger serverLogger;
 
     public ServerSocketWrapper(ServerLogger serverLogger) {
@@ -17,7 +15,7 @@ public class ServerSocketWrapper implements IServerSocket {
 
     public void createAndListen(int portNumber) {
         try {
-            serverSocket = new ServerSocket(portNumber);
+            serverSocket = new java.net.ServerSocket(portNumber);
             String waitingConnection = String.format("[-] Listening for connection on port %s", portNumber);
             serverLogger.logSomething(INFO, waitingConnection);
         } catch (IOException e) {
@@ -27,9 +25,9 @@ public class ServerSocketWrapper implements IServerSocket {
         }
     }
 
-    public ISocket acceptConnection() {
+    public Socket acceptConnection() {
         try {
-            Socket clientSocket = serverSocket.accept();
+            java.net.Socket clientSocket = serverSocket.accept();
             String acceptedConnection = "[-] Accepted connection";
             serverLogger.logSomething(INFO, acceptedConnection);
             return new SocketWrapper(clientSocket);

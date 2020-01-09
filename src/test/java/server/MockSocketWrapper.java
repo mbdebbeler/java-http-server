@@ -1,6 +1,6 @@
 package server;
 
-public class MockSocketWrapper implements ISocket {
+public class MockSocketWrapper implements Socket {
     private static byte[] sentData;
     private String testMessage;
     public static boolean closeWasCalled = false;
