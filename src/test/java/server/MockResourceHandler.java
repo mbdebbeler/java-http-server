@@ -30,8 +30,8 @@ public class MockResourceHandler implements ResourceHandler {
         return "".getBytes();
     }
 
-    public String[] directoryContent() {
-        return new String[0];
+    public String directoryContent() {
+        return new String("");
     }
 
     private void writeContentToFile(String resourceIdentifier, byte[] content) throws IOException {

@@ -17,7 +17,7 @@ public class DeleteRequestHandler implements RequestHandler {
     }
 
     private boolean delete(String resourceIdentifier) {
-        return new FileResourceHandler().delete(resourceIdentifier);
+        return new FileResourceHandler(Config.rootResourcePath).delete(resourceIdentifier);
     }
 
 }

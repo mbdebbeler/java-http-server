@@ -7,5 +7,5 @@ public interface ResourceHandler {
 
     byte[] read(String filename);
 
-    String[] directoryContent();
+    String directoryContent();
 }
