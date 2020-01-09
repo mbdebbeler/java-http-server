@@ -13,6 +13,11 @@ import java.util.List;
 import static HTTPComponents.StatusLineComponents.CRLF;
 
 public class FileResourceHandler implements ResourceHandler {
+    private String rootFilePath;
+
+    public FileResourceHandler(String rootFilePath) {
+        this.rootFilePath = rootFilePath;
+    }
 
     public void write(String resourceIdentifier, byte[] content) {
         try {
@@ -23,13 +28,12 @@ public class FileResourceHandler implements ResourceHandler {
     }
 
     public boolean delete(String resourceIdentifier) {
-        String fullPath = new File("src/main/resources/" + resourceIdentifier).getAbsolutePath();
-        File resource = new File(fullPath);
+        File resource = new File(String.valueOf(Server.class.getResource(resourceIdentifier)));
         return resource.delete();
     }
 
     public byte[] read(String resourceIdentifier) {
-        Path fullPath = Paths.get(new File("src/main/resources/" + resourceIdentifier).getAbsolutePath());
+        Path fullPath = Paths.get(String.valueOf(Server.class.getResource(resourceIdentifier)));
         try {
             return Files.readAllBytes(fullPath);
         } catch (IOException e) {
@@ -38,21 +42,20 @@ public class FileResourceHandler implements ResourceHandler {
         return "".getBytes();
     }
 
-    public String[] directoryContent() {
-        File rootDirectory = new File("src/main/resources/");
-        return rootDirectory.list();
+    public String directoryContent() {
+        File rootDirectory = new File(this.rootFilePath);
+        return getDelimitedContentsOfDirectory(rootDirectory.list());
     }
 
     private void writeContentToFile(String resourceIdentifier, byte[] content) throws IOException {
-        File resource = new File("src/main/resources/" + resourceIdentifier);
+        File resource = new File(String.valueOf(Server.class.getResource(resourceIdentifier)));
         FileOutputStream fileOutputStream = new FileOutputStream(resource, true);
         fileOutputStream.write(content);
         fileOutputStream.flush();
         fileOutputStream.close();
     }
 
-    public String getDelimitedContentsOfDirectory() {
-        String[] filenames = directoryContent();
+    private String getDelimitedContentsOfDirectory(String[] filenames) {
         return delimitedValues(Arrays.asList(transformToLinks(filenames)), CRLF);
     }
 

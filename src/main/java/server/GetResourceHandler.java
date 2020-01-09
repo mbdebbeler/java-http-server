@@ -21,11 +21,11 @@ public class GetResourceHandler implements RequestHandler {
     }
 
     public byte[] fetchResource(String resourceIdentifier) {
-        return new FileResourceHandler().read(resourceIdentifier);
+        return new FileResourceHandler(Config.rootResourcePath).read(resourceIdentifier);
     }
 
     public byte[] fetchDirectory() {
-        return new FileResourceHandler().getDelimitedContentsOfDirectory().getBytes();
+        return new FileResourceHandler(Config.rootResourcePath).directoryContent().getBytes();
     }
 }
 

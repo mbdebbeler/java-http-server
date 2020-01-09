@@ -96,7 +96,7 @@ public class ConnectionHandlerTest {
 
     @Test
     public void itAcceptsPOSTRequestsWithHeadersAndEchoesTheBody() {
-        String testRequest = "POST /echo_body HTTP/1.1" + NEWLINE +
+        String testRequest = "POST /echo_body/test.txt HTTP/1.1" + NEWLINE +
                 "Content-Length: 32" + NEWLINE +
                 "Content-Type: application/x-www-form-urlencoded" + NEWLINE +
                 CRLF + CRLF +

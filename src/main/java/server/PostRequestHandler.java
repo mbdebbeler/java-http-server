@@ -12,7 +12,7 @@ public class PostRequestHandler implements RequestHandler {
     }
 
     private void write(String resourceIdentifier, byte[] content) {
-        new FileResourceHandler().write(resourceIdentifier, content);
+        new FileResourceHandler(Config.rootResourcePath).write(resourceIdentifier, content);
     }
 
 }

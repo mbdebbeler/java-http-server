@@ -36,7 +36,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void responseBuildsEchoResponseWithReceivedBody() {
-        String incomingRequest = "POST /simple_get HTTP/1.1" + NEWLINE +
+        String incomingRequest = "POST /simple_get/test.txt HTTP/1.1" + NEWLINE +
                 "Content-Length: 32" + NEWLINE +
                 "Content-Type: text/html; charset=UTF-8" + NEWLINE +
                 CRLF + CRLF +
