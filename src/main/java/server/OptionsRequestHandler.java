@@ -4,7 +4,6 @@ import HTTPComponents.Method;
 import HTTPComponents.StatusCode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class OptionsRequestHandler implements RequestHandler {
     private ArrayList<Route> routes;
@@ -18,7 +17,7 @@ public class OptionsRequestHandler implements RequestHandler {
     public Response handle(Request request) {
         key = "Allow";
         value = encodeAsString(buildAllowedMethods(request));
-        return new ResponseBuilder().addHeader(key, value).addStatusCode(StatusCode.OK).build();
+        return new ResponseBuilder().addHeader(key, value).setStatusCode(StatusCode.OK).build();
     }
 
     private ArrayList<String> buildAllowedMethods(Request request) {

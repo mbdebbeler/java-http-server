@@ -13,23 +13,15 @@ public class RequestTest {
 
     @Test
     public void getMethodReturnsGETWhenRequestStartsWithGET() {
-        Request testRequest = new Request("GET /test_path");
+        Request testRequest = new RequestBuilder("GET /test_path HTTP/1.1").build();
         Method actual = testRequest.getMethod();
         Method expected = GET;
         Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void getMethodReturnsINVALIDWhenRequestDoesNotStartWithGET() {
-        Request testRequest = new Request("BOO /test_path");
-        Method actual = testRequest.getMethod();
-        Method expected = Method.INVALID;
-        Assert.assertEquals(expected, actual);
-    }
-
-    @Test
     public void getPathReturnsAPathWhenPathIsValid() {
-        Request testRequest = new Request("GET /test_path");
+        Request testRequest = new RequestBuilder("GET /test_path HTTP/1.1").build();
         String actual = testRequest.getPath();
         String expected = "/test_path";
         Assert.assertEquals(expected, actual);
@@ -37,7 +29,7 @@ public class RequestTest {
 
     @Test
     public void getVersionReturnsVersion() {
-        Request request = new Request("GET /test_path HTTP/1.1");
+        Request request = new RequestBuilder("GET /test_path HTTP/1.1").build();
         String actual = request.getVersion();
         String expected = "HTTP/1.1";
 
@@ -46,7 +38,7 @@ public class RequestTest {
 
     @Test
     public void getVersionReturnsVersionUsingConstant() {
-        Request request = new Request("GET /test_path HTTP/1.1");
+        Request request = new RequestBuilder("GET /test_path HTTP/1.1").build();
         String actual = request.getVersion();
         String expected = VERSION;
 
@@ -55,7 +47,7 @@ public class RequestTest {
 
     @Test
     public void getBodyReturnsABodyWhenThereIsABody() {
-        Request testRequest = new Request(GET + "/test_path" + VERSION + CRLF + CRLF + "Where is the body?");
+        Request testRequest = new RequestBuilder(GET + "/test_path" + VERSION + CRLF + CRLF + "Where is the body?").build();
         String actual = new String(testRequest.getBody());
         String expected = "Where is the body?";
         Assert.assertEquals(expected, actual);
@@ -69,7 +61,7 @@ public class RequestTest {
                 "User-Agent: Ruby\n" +
                 "Connection: close\n" +
                 "Host: 127.0.0.1:5000";
-        Request request = new Request(message);
+        Request request = new RequestBuilder(message).build();
         Map actualHeaders = request.getHeaders();
 
         Map<String, String> expectedHeaders = Map.of(
@@ -82,6 +74,15 @@ public class RequestTest {
         Assert.assertEquals(expectedHeaders, actualHeaders);
     }
 
+    @Test
+    public void canParseIdFromAPathWhenThereASecondSlash() {
+        String message = "GET /the_path/the_id HTTP/1.1\n";
+        Request request = new RequestBuilder(message).build();
+        String expectedId = "the_id";
+        String actualId = request.getResourceIdentifier();
+
+        Assert.assertEquals(expectedId, actualId);
+    }
 
 
 }

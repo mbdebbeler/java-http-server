@@ -4,8 +4,6 @@ import HTTPComponents.StatusCode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static HTTPComponents.StatusLineComponents.CRLF;
 import static HTTPComponents.StatusLineComponents.NEWLINE;
 
@@ -13,7 +11,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void responseBuilderReturnsADefaultResponse() {
-        Response testResponse = new ResponseBuilder().addStatusCode(StatusCode.OK).build();
+        Response testResponse = new ResponseBuilder().setStatusCode(StatusCode.OK).build();
         StatusCode expectedStatusCode = StatusCode.OK;
         String expectedStatusLine = "HTTP/1.1 200 OK" + CRLF;
         StatusCode actualStatusCode = testResponse.getStatusCode();
@@ -25,7 +23,7 @@ public class ResponseBuilderTest {
 
     @Test
     public void canAddAStatusCode() {
-        Response testResponse = new ResponseBuilder().addStatusCode(StatusCode.NOT_FOUND).build();
+        Response testResponse = new ResponseBuilder().setStatusCode(StatusCode.NOT_FOUND).build();
         StatusCode expectedStatusCode = StatusCode.NOT_FOUND;
         String expectedStatusLine = "HTTP/1.1 404 Not Found" + CRLF;
         StatusCode actualStatusCode = testResponse.getStatusCode();
@@ -38,14 +36,14 @@ public class ResponseBuilderTest {
 
     @Test
     public void responseBuildsEchoResponseWithReceivedBody() {
-        String incomingRequest = "POST /simple_get HTTP/1.1" + NEWLINE +
+        String incomingRequest = "POST /simple_get/test.txt HTTP/1.1" + NEWLINE +
                 "Content-Length: 32" + NEWLINE +
                 "Content-Type: text/html; charset=UTF-8" + NEWLINE +
                 CRLF + CRLF +
                 "some body that could be anything";
-        Request request = new Request(incomingRequest);
+        Request request = new RequestBuilder(incomingRequest).build();
 
-        String actualResponse = new String(new ResponseBuilder().addStatusCode(StatusCode.OK).addBody(request.getBody()).build().getResponseBytes());
+        String actualResponse = new String(new ResponseBuilder().setStatusCode(StatusCode.OK).setBody(request.getBody()).build().getResponseBytes());
         String expectedResponse = "HTTP/1.1 200 OK"
                 + CRLF
                 + CRLF

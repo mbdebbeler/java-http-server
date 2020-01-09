@@ -35,7 +35,7 @@ public class Router {
             }
         }
 
-        return new ResponseBuilder().addStatusCode(StatusCode.NOT_FOUND).build();
+        return new ResponseBuilder().setStatusCode(StatusCode.NOT_FOUND).build();
     }
 
 }

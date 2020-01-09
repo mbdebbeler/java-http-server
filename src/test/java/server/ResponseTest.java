@@ -10,7 +10,7 @@ public class ResponseTest {
     @Test
     public void responseAddsAStatusCode() {
         Response testResponse = new ResponseBuilder()
-                .addStatusCode(StatusCode.OK)
+                .setStatusCode(StatusCode.OK)
                 .build();
         StatusCode actualStatusCode = testResponse.getStatusCode();
         StatusCode expectedStatusCode = StatusCode.OK;
@@ -20,7 +20,7 @@ public class ResponseTest {
     @Test
     public void addsAnEmptyBody() {
         Response testResponse = new ResponseBuilder()
-                .addStatusCode(StatusCode.OK)
+                .setStatusCode(StatusCode.OK)
                 .build();
         String actualBody = new String(testResponse.getBody());
         String expectedBody = new String("".getBytes());
@@ -30,8 +30,8 @@ public class ResponseTest {
     @Test
     public void addsABody() {
         Response testResponse = new ResponseBuilder()
-                .addStatusCode(StatusCode.OK)
-                .addBody("test body".getBytes())
+                .setStatusCode(StatusCode.OK)
+                .setBody("test body".getBytes())
                 .build();
         String actualBody = new String(testResponse.getBody());
         String expectedBody = "test body";
@@ -43,9 +43,9 @@ public class ResponseTest {
     @Test
     public void addsHeaders() {
         Response testResponse = new ResponseBuilder()
-                .addStatusCode(StatusCode.OK)
+                .setStatusCode(StatusCode.OK)
                 .addHeader("Allow", "GET")
-                .addBody("test body".getBytes())
+                .setBody("test body".getBytes())
                 .build();
         String actualResponse = new String(testResponse.getResponseBytes());
         String expectedResponse = "HTTP/1.1 200 OK\r\nAllow: GET\r\n\r\ntest body";

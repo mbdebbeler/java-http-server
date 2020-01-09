@@ -1,5 +1,5 @@
 package HTTPComponents;
 
 public enum Method {
-    GET, HEAD, INVALID, OPTIONS, PUT, POST
+    GET, DELETE, HEAD, INVALID, OPTIONS, PUT, POST
 }
