@@ -1,6 +1,10 @@
-package server;
+package application.Handler;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
+import application.Config;
+import server.Request;
+import server.Response;
+import server.ResponseBuilder;
 
 public class GetResourceHandler implements RequestHandler {
 

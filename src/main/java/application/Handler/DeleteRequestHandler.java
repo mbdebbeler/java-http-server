@@ -1,6 +1,8 @@
-package server;
+package application.Handler;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
+import application.Config;
+import server.*;
 
 public class DeleteRequestHandler implements RequestHandler {
 

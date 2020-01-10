@@ -1,4 +1,6 @@
-package server;
+package application.Handler;
+
+import server.Server;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static HTTPComponents.StatusLineComponents.CRLF;
+import static server.HTTPComponents.StatusLineComponents.CRLF;
 
 public class FileResourceHandler implements ResourceHandler {
     private String rootFilePath;

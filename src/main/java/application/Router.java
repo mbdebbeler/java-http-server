@@ -1,7 +1,14 @@
-package server;
+package application;
 
-import HTTPComponents.Method;
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.Method;
+import server.HTTPComponents.StatusCode;
+import application.Handler.DefaultRequestHandler;
+import application.Handler.NotAllowedHandler;
+import application.Handler.OptionsRequestHandler;
+import server.Request;
+import server.Response;
+import server.ResponseBuilder;
+import server.Route;
 
 import java.util.ArrayList;
 

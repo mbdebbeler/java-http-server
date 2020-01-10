@@ -1,6 +1,7 @@
 package server;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
+import application.Handler.RequestHandler;
 
 public class MockDeleteRequestHandler implements RequestHandler {
 

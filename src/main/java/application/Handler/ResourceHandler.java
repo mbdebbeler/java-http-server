@@ -1,4 +1,4 @@
-package server;
+package application.Handler;
 
 public interface ResourceHandler {
     void write(String filename, byte[] content);

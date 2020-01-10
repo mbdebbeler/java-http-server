@@ -1,7 +1,8 @@
-package server;
+package application.Handler;
 
-import HTTPComponents.Method;
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.Method;
+import server.HTTPComponents.StatusCode;
+import server.*;
 
 import java.util.ArrayList;
 

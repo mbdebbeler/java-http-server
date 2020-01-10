@@ -1,6 +1,9 @@
-package server;
+package application.Handler;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
+import server.Request;
+import server.Response;
+import server.ResponseBuilder;
 
 import java.util.HashMap;
 

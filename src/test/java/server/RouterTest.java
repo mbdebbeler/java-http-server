@@ -1,14 +1,18 @@
 package server;
 
-import HTTPComponents.Method;
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.Method;
+import server.HTTPComponents.StatusCode;
+import application.Handler.DefaultRequestHandler;
+import application.Handler.GetResourceHandler;
+import application.Handler.PostRequestHandler;
+import application.Router;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
 import java.util.ArrayList;
 
-import static HTTPComponents.StatusLineComponents.*;
+import static server.HTTPComponents.StatusLineComponents.*;
 
 public class RouterTest {
     private ArrayList<Route> routes;

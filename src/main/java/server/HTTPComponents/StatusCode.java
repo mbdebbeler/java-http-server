@@ -1,4 +1,4 @@
-package HTTPComponents;
+package server.HTTPComponents;
 
 public enum StatusCode {
     OK(200), NO_CONTENT(204), BAD_REQUEST(400), NOT_FOUND(404), NOT_ALLOWED(405), MOVED_PERMANENTLY(301);

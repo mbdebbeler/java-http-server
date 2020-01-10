@@ -1,6 +1,9 @@
-package server;
+package application;
 
-import HTTPComponents.Method;
+import server.HTTPComponents.Method;
+import application.Handler.*;
+import server.Route;
+import server.RouteFactory;
 
 import java.util.ArrayList;
 

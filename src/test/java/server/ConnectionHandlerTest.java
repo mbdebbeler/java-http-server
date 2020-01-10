@@ -1,15 +1,17 @@
 package server;
 
-import HTTPComponents.Method;
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.Method;
+import server.HTTPComponents.StatusCode;
+import application.Handler.RedirectRequestHandler;
+import application.Router;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static HTTPComponents.StatusLineComponents.CRLF;
-import static HTTPComponents.StatusLineComponents.NEWLINE;
+import static server.HTTPComponents.StatusLineComponents.CRLF;
+import static server.HTTPComponents.StatusLineComponents.NEWLINE;
 
 public class ConnectionHandlerTest {
     Router mockRouter;

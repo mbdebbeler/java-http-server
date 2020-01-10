@@ -1,4 +1,4 @@
-package HTTPComponents;
+package server.HTTPComponents;
 
 public class StatusLineComponents {
 
