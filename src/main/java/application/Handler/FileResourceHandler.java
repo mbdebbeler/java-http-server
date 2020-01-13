@@ -1,5 +1,6 @@
 package application.Handler;
 
+import application.Config;
 import server.Server;
 
 import java.io.File;
@@ -30,18 +31,20 @@ public class FileResourceHandler implements ResourceHandler {
     }
 
     public boolean delete(String resourceIdentifier) {
-        File resource = new File(String.valueOf(Server.class.getResource(resourceIdentifier)));
+        File resource = new File(Config.rootResourcePath + resourceIdentifier);
         return resource.delete();
     }
 
     public byte[] read(String resourceIdentifier) {
-        Path fullPath = Paths.get(String.valueOf(Server.class.getResource(resourceIdentifier)));
-        try {
-            return Files.readAllBytes(fullPath);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Path fullPath = Paths.get(Config.rootResourcePath + resourceIdentifier);
+        if (Files.exists(fullPath)) {
+            try {
+                return Files.readAllBytes(fullPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return "".getBytes();
+        return new byte[0];
     }
 
     public String directoryContent() {
@@ -50,7 +53,7 @@ public class FileResourceHandler implements ResourceHandler {
     }
 
     private void writeContentToFile(String resourceIdentifier, byte[] content) throws IOException {
-        File resource = new File(String.valueOf(Server.class.getResource(resourceIdentifier)));
+        File resource = new File(Config.rootResourcePath + resourceIdentifier);
         FileOutputStream fileOutputStream = new FileOutputStream(resource, true);
         fileOutputStream.write(content);
         fileOutputStream.flush();

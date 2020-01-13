@@ -20,6 +20,7 @@ public class SpinachTestsRouteFactory implements RouteFactory {
             add(new Route(Method.POST, "/echo_body", new PostRequestHandler()));
             add(new Route(Method.GET, "/redirect", new RedirectRequestHandler()));
             add(new Route(Method.GET, "/images", new GetResourceHandler()));
+            add(new Route(Method.POST, "/images", new PostRequestHandler()));
             add(new Route(Method.DELETE, "/images", new DeleteRequestHandler()));
         }};
     }
