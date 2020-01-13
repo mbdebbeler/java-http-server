@@ -22,7 +22,7 @@ public class ConnectionHandler implements Runnable {
             if (message != null) {
                 Request request = new RequestBuilder(message).build();
                 Response response = this.router.route(request);
-                String statusLineAsString = response.getStatusLine().toString();
+                String statusLineAsString = new String (response.getStatusLine());
                 serverLogger.logSomething(INFO, statusLineAsString.trim());
                 socket.send(response.getResponseBytes());
             }

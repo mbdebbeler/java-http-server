@@ -5,6 +5,8 @@ import application.Config;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,20 +37,29 @@ public class FileResourceHandler implements ResourceHandler {
     }
 
     public byte[] read(String resourceIdentifier) {
+        InputStream inputStream = getClass().getResourceAsStream(resourceIdentifier);
         Path fullPath = Paths.get(Config.rootResourcePath + resourceIdentifier);
-        if (Files.exists(fullPath)) {
+        System.out.println("FullPath: " + fullPath);
+        System.out.println("File exists s" + Files.exists(fullPath));
+        URL uri = getClass().getResource(resourceIdentifier);
+        System.out.println("URI: " + uri);
+//        if (Files.exists(fullPath)) {
+            System.out.println("FILE EXISTS!");
             try {
-                return Files.readAllBytes(fullPath);
+                return inputStream.readAllBytes();
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("File did not exist according to pathname, returning empty byte array");
+                return new byte[0];
             }
-        }
-        return new byte[0];
+//        }
     }
 
     public String directoryContent() {
         File rootDirectory = new File(this.rootFilePath);
-        return getDelimitedContentsOfDirectory(rootDirectory.list());
+        String[] files = rootDirectory.list();
+        Arrays.sort(files);
+        return getDelimitedContentsOfDirectory(files);
     }
 
     private void writeContentToFile(String resourceIdentifier, byte[] content) throws IOException {

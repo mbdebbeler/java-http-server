@@ -200,15 +200,15 @@ public class RouterTest {
                 + CRLF
                 + "<a href=/images/big-test.jpg>big-test.jpg</a>"
                 + CRLF
-                + "<a href=/images/test.html>test.html</a>"
-                + CRLF
-                + "<a href=/images/test.txt>test.txt</a>"
-                + CRLF
-                + "<a href=/images/small-test.jpeg>small-test.jpeg</a>"
-                + CRLF
                 + "<a href=/images/delete_test.jpg>delete_test.jpg</a>"
                 + CRLF
-                + "<a href=/images/post_test.jpg>post_test.jpg</a>";
+                + "<a href=/images/post_test.jpg>post_test.jpg</a>"
+                + CRLF
+                +"<a href=/images/small-test.jpeg>small-test.jpeg</a>"
+                + CRLF
+                + "<a href=/images/test.html>test.html</a>"
+                + CRLF
+                + "<a href=/images/test.txt>test.txt</a>";
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
