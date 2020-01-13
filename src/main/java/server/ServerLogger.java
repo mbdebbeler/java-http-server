@@ -27,7 +27,6 @@ public class ServerLogger {
     }
 
     public void logSomething(Level level, String message) {
-        System.out.println("LEVEL: " + level + ". MESSAGE: " + message);
         logger.setUseParentHandlers(false);
         try {
             fileHandler = makeFileHandler();

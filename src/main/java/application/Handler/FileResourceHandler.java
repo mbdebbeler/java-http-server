@@ -2,11 +2,7 @@ package application.Handler;
 
 import application.Config;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,22 +33,19 @@ public class FileResourceHandler implements ResourceHandler {
     }
 
     public byte[] read(String resourceIdentifier) {
-        InputStream inputStream = getClass().getResourceAsStream(resourceIdentifier);
         Path fullPath = Paths.get(Config.rootResourcePath + resourceIdentifier);
-        System.out.println("FullPath: " + fullPath);
-        System.out.println("File exists s" + Files.exists(fullPath));
-        URL uri = getClass().getResource(resourceIdentifier);
-        System.out.println("URI: " + uri);
-//        if (Files.exists(fullPath)) {
-            System.out.println("FILE EXISTS!");
+        if (Files.exists(fullPath)) {
             try {
-                return inputStream.readAllBytes();
+                return Files.readAllBytes(fullPath);
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("File did not exist according to pathname, returning empty byte array");
-                return new byte[0];
             }
-//        }
+        }
+        return noResourceContentAvailable();
+    }
+
+    private byte[] noResourceContentAvailable() {
+        return new byte[0];
     }
 
     public String directoryContent() {
@@ -81,8 +74,10 @@ public class FileResourceHandler implements ResourceHandler {
     private List<String> asLinks(String[] filenames) {
         List<String> links = new ArrayList<>();
         for (String filename : filenames) {
-            links.add(String.format("<a href=/images/%s>%s</a>", filename, filename));
+            links.add(String.format("<li><a href=/images/%s>%s</a></li>", filename, filename));
         }
+        wrapInUnorderedList(links);
+        links.add(0, makeDirectoryHeader());
         return links;
     }
 
@@ -97,6 +92,16 @@ public class FileResourceHandler implements ResourceHandler {
             return firstValue + delimiterSeparatedValues;
         }
         return delimiterSeparatedValues;
+    }
+
+    private String makeDirectoryHeader() {
+        return new String("<h1>Available Images:</h1>");
+    }
+
+    private List<String> wrapInUnorderedList(List<String> links) {
+        links.add(0, "<ul>");
+        links.add(links.size(), "</ul>");
+        return links;
     }
 
 }

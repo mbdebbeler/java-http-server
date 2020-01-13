@@ -5,12 +5,10 @@ import application.Config;
 import server.Request;
 import server.Response;
 import server.ResponseBuilder;
-import server.Server;
 
-import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+
 
 public class GetResourceHandler implements RequestHandler {
 

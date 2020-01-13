@@ -198,21 +198,30 @@ public class RouterTest {
                 + CRLF + "Content-Type: text/html"
                 + CRLF
                 + CRLF
-                + "<a href=/images/big-test.jpg>big-test.jpg</a>"
+                + "<h1>Available Images:</h1>"
                 + CRLF
-                + "<a href=/images/delete_test.jpg>delete_test.jpg</a>"
+                + "<ul>"
                 + CRLF
-                + "<a href=/images/post_test.jpg>post_test.jpg</a>"
+                + "<li><a href=/images/big-test.jpg>big-test.jpg</a></li>"
                 + CRLF
-                +"<a href=/images/small-test.jpeg>small-test.jpeg</a>"
+                + "<li><a href=/images/delete_test.jpg>delete_test.jpg</a></li>"
                 + CRLF
-                + "<a href=/images/test.html>test.html</a>"
+                + "<li><a href=/images/index.html>index.html</a></li>"
                 + CRLF
-                + "<a href=/images/test.txt>test.txt</a>";
+                + "<li><a href=/images/new_test.jpeg>new_test.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/post_test.jpg>post_test.jpg</a></li>"
+                + CRLF
+                + "<li><a href=/images/small-test.jpeg>small-test.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/test.html>test.html</a></li>"
+                + CRLF
+                + "<li><a href=/images/test.txt>test.txt</a></li>"
+                + CRLF
+                + "</ul>";
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponse, actualResponse);
     }
-
 }
