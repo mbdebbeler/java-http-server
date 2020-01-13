@@ -33,7 +33,7 @@ public class FileResourceHandler implements ResourceHandler {
     }
 
     public byte[] read(String resourceIdentifier) {
-        Path fullPath = Paths.get(Config.rootResourcePath + resourceIdentifier);
+        Path fullPath = Paths.get(String.valueOf(this.getClass().getResource(resourceIdentifier)));
         if (Files.exists(fullPath)) {
             try {
                 return Files.readAllBytes(fullPath);
