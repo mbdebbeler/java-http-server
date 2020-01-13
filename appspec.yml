@@ -3,9 +3,9 @@ os: linux
 files:
   - source: out/artifacts/java_http_server_jar/java-http-server.jar
     destination: /opt
-  - source: /scripts/start_server.sh
+  - source: /scripts/start_deployed_server.sh
     destination: /opt
 hooks:
   AfterInstall:
-    - location: ../../../../../start_server.sh
+    - location: ../../../../../start_deployed_server.sh
 

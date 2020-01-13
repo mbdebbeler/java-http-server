@@ -151,8 +151,8 @@ public class RouterTest {
 
     @Test
     public void postsAResourceInADirectory() {
-        String imageBody = new String(new MockResourceHandler().read("test-image.jpg"));
-        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post_test.jpg" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
+        String imageBody = new String(new MockResourceHandler().read("post-test-2.jpeg"));
+        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post-test.jpeg" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
         Router testRouter = new Router(routes);
         Response testResponse = testRouter.route(testRequest);
         StatusCode actualStatusCode = testResponse.getStatusCode();
@@ -210,7 +210,9 @@ public class RouterTest {
                 + CRLF
                 + "<li><a href=/images/new_test.jpeg>new_test.jpeg</a></li>"
                 + CRLF
-                + "<li><a href=/images/post_test.jpg>post_test.jpg</a></li>"
+                + "<li><a href=/images/post-test-2.jpeg>post-test-2.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/post-test.jpeg>post-test.jpeg</a></li>"
                 + CRLF
                 + "<li><a href=/images/small-test.jpeg>small-test.jpeg</a></li>"
                 + CRLF
