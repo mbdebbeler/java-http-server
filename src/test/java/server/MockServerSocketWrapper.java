@@ -1,6 +1,6 @@
 package server;
 
-public class MockServerSocketWrapper implements IServerSocket {
+public class MockServerSocketWrapper implements ServerSocket {
 
     public static boolean isListening = false;
     public static boolean isClosed = false;

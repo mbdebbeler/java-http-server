@@ -1,17 +1,17 @@
 package server;
 
-import HTTPComponents.Method;
+import server.HTTPComponents.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static HTTPComponents.StatusLineComponents.CRLF;
-import static HTTPComponents.StatusLineComponents.VERSION;
+import static server.HTTPComponents.StatusLineComponents.CRLF;
+import static server.HTTPComponents.StatusLineComponents.VERSION;
 
 public class RequestBuilder {
     private String message;
-    public HTTPComponents.Method method;
+    public server.HTTPComponents.Method method;
     public String path;
     public String version;
     public byte[] body;
@@ -56,7 +56,7 @@ public class RequestBuilder {
     }
 
     public void setHeaders() {
-        String headers = message.split(CRLF)[0];
+        String headers = message.split(CRLF+CRLF)[0];
         this.headers = getHeaderKeyValuePairs(splitRequest(headers));
     }
 

@@ -1,13 +1,13 @@
 package server;
 
-import HTTPComponents.Method;
+import server.HTTPComponents.Method;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Map;
 
-import static HTTPComponents.Method.GET;
-import static HTTPComponents.StatusLineComponents.CRLF;
-import static HTTPComponents.StatusLineComponents.VERSION;
+import static server.HTTPComponents.Method.GET;
+import static server.HTTPComponents.StatusLineComponents.CRLF;
+import static server.HTTPComponents.StatusLineComponents.VERSION;
 
 public class RequestTest {
 

@@ -1,16 +1,18 @@
 package server;
 
+import application.Config;
+import application.Router;
+
 import java.io.IOException;
 
 public class Server {
 
     public static void main(String[] args) throws IOException {
-        args = new String[] {"5000"};
+        int port = (args.length > 0) ? Integer.parseInt(args[0]) : Config.defaultPort;
         ServerLogger serverLogger = new ServerLogger();
-        IRouteFactory routeFactory = new RouteFactory();
-        Router router = new Router(routeFactory.makeRoutes());
-        IServerSocket socket = new ServerSocketWrapper(serverLogger);
-        Dispatcher dispatcher = new Dispatcher(socket, router, serverLogger);
-        dispatcher.listenAndDispatch(args, socket);
+        Router router = Config.router;
+        ServerSocket socket = new ServerSocketWrapper(serverLogger);
+        SocketDispatcher socketDispatcher = new SocketDispatcher(socket, router, serverLogger);
+        socketDispatcher.listen(port);
     }
 }

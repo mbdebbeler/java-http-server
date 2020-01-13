@@ -1,11 +1,11 @@
 package server;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static HTTPComponents.StatusLineComponents.CRLF;
-import static HTTPComponents.StatusLineComponents.NEWLINE;
+import static server.HTTPComponents.StatusLineComponents.CRLF;
+import static server.HTTPComponents.StatusLineComponents.NEWLINE;
 
 public class ResponseBuilderTest {
 

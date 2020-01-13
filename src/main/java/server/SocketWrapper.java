@@ -1,15 +1,12 @@
 package server;
 
 import java.io.*;
-import java.net.Socket;
 
-import static java.util.logging.Level.FINE;
-
-public class SocketWrapper implements ISocket {
+public class SocketWrapper implements Socket {
     private BufferedReader input;
     private DataOutputStream output;
 
-    public SocketWrapper(Socket socket) {
+    public SocketWrapper(java.net.Socket socket) {
         try {
             this.input = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));

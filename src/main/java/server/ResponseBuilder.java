@@ -1,13 +1,11 @@
 package server;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Scanner;
 
