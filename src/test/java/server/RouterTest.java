@@ -1,14 +1,18 @@
 package server;
 
-import HTTPComponents.Method;
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.Method;
+import server.HTTPComponents.StatusCode;
+import application.Handler.DefaultRequestHandler;
+import application.Handler.GetResourceHandler;
+import application.Handler.PostRequestHandler;
+import application.Router;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
 import java.util.ArrayList;
 
-import static HTTPComponents.StatusLineComponents.*;
+import static server.HTTPComponents.StatusLineComponents.*;
 
 public class RouterTest {
     private ArrayList<Route> routes;
@@ -147,8 +151,8 @@ public class RouterTest {
 
     @Test
     public void postsAResourceInADirectory() {
-        String imageBody = new String(new MockResourceHandler().read("test-image.jpg"));
-        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post_test.jpg" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
+        String imageBody = new String(new MockResourceHandler().read("post-test-2.jpeg"));
+        Request testRequest = new RequestBuilder(Method.POST + SPACE + "/test_images/post-test.jpeg" + SPACE + VERSION + CRLF + CRLF + imageBody).build();
         Router testRouter = new Router(routes);
         Response testResponse = testRouter.route(testRequest);
         StatusCode actualStatusCode = testResponse.getStatusCode();
@@ -194,21 +198,32 @@ public class RouterTest {
                 + CRLF + "Content-Type: text/html"
                 + CRLF
                 + CRLF
-                + "<a href=/images/big-test.jpg>big-test.jpg</a>"
+                + "<h1>Available Images:</h1>"
                 + CRLF
-                + "<a href=/images/test.html>test.html</a>"
+                + "<ul>"
                 + CRLF
-                + "<a href=/images/test.txt>test.txt</a>"
+                + "<li><a href=/images/big-test.jpg>big-test.jpg</a></li>"
                 + CRLF
-                + "<a href=/images/small-test.jpeg>small-test.jpeg</a>"
+                + "<li><a href=/images/delete_test.jpg>delete_test.jpg</a></li>"
                 + CRLF
-                + "<a href=/images/delete_test.jpg>delete_test.jpg</a>"
+                + "<li><a href=/images/index.html>index.html</a></li>"
                 + CRLF
-                + "<a href=/images/post_test.jpg>post_test.jpg</a>";
+                + "<li><a href=/images/new_test.jpeg>new_test.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/post-test-2.jpeg>post-test-2.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/post-test.jpeg>post-test.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/small-test.jpeg>small-test.jpeg</a></li>"
+                + CRLF
+                + "<li><a href=/images/test.html>test.html</a></li>"
+                + CRLF
+                + "<li><a href=/images/test.txt>test.txt</a></li>"
+                + CRLF
+                + "</ul>";
 
         Assert.assertEquals(expectedStatusCode, actualStatusCode);
         Assert.assertEquals(expectedStatusLine, actualStatusLine);
         Assert.assertEquals(expectedResponse, actualResponse);
     }
-
 }

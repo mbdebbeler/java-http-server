@@ -1,3 +1,3 @@
 #!/bin/sh
-./gradlew build
+./gradlew build --info
 ./gradlew test

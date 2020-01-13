@@ -1,6 +1,6 @@
 package server;
 
-import HTTPComponents.Method;
+import server.HTTPComponents.Method;
 
 import java.util.HashMap;
 

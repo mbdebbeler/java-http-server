@@ -1,6 +1,6 @@
 package server;
 
-import HTTPComponents.StatusCode;
+import server.HTTPComponents.StatusCode;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static HTTPComponents.StatusLineComponents.*;
+import static server.HTTPComponents.StatusLineComponents.*;
 
 public class Response {
     private StatusCode statusCode;
