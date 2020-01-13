@@ -31,4 +31,4 @@ script:
   - ./scripts/zip_project.sh
 
 after_deploy:
-  - ./scripts/clone_and_run_acceptance_tests.sh
+  - ./scripts/clone_and_run_images_acceptance_tests.sh

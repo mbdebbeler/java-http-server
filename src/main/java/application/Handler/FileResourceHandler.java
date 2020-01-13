@@ -1,7 +1,6 @@
 package application.Handler;
 
 import application.Config;
-import server.Server;
 
 import java.io.File;
 import java.io.FileOutputStream;
