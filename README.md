@@ -31,11 +31,11 @@ From the root of the project, call
 bash scripts/clone_and_run_image_acceptance_tests.sh
 ```
 
-#### Built With
+## Built With
  - Java
  - Gradle
  - JUnit
  - Spinach 
 
-#### Deployment
+## Deployment
 If you're a future apprentice reading this, I deployed this to an AWS EC2 instance! Slack me and I will be so happy to walk you through the tricky parts to the best of my memory. 
